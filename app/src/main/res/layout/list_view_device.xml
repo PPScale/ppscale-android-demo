@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/device_name"
+        android:layout_width="141dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:drawablePadding="5sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Scale" />
+
+    <TextView
+        android:id="@+id/device_mac"
+        android:layout_width="243dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/device_name"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="08:00:00:08:00:00"/>
+
+</RelativeLayout>
