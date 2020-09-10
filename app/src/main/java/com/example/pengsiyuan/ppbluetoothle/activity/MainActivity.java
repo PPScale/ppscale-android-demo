@@ -43,6 +43,19 @@ public class MainActivity extends AppCompatActivity {
         weightTextView = findViewById(R.id.weightTextView);
         requestPower();
 
+        Button mBtnConfigWifi = findViewById(R.id.wificonfigBtn);
+        mBtnConfigWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PPScale.isBluetoothOpened()) {
+                    Intent intent = new Intent(MainActivity.this, BleConfigWifiActivity.class);
+                    startActivity(intent);
+                } else {
+                    PPScale.openBluetooth();
+                }
+            }
+        });
+
         Button mBtnBindingDeice = findViewById(R.id.bindingDeviceBtn);
         mBtnBindingDeice.setOnClickListener(new View.OnClickListener() {
             @Override
