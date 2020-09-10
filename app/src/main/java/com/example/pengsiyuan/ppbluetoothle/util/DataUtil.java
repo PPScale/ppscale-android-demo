@@ -25,6 +25,7 @@ public class DataUtil {
                 .setHeight(180)
                 .setSex(PPUserSex.PPUserSexMale)
                 .setGroupNum(0)
+                .setGravidity(0)
                 .build();
     }
 

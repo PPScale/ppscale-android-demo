@@ -223,6 +223,7 @@ public class BindingDeviceActivity extends Activity {
         super.onDestroy();
         if (ppScale != null) {
             ppScale.stopSearch();
+            ppScale.disConnect();
         }
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();

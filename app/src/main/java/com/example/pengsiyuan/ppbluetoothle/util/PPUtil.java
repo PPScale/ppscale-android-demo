@@ -20,30 +20,14 @@ public class PPUtil {
     }
 
     public static String kgToJin(double lb) {
-        double kg = lb * 2;
+        double kg =  lb * 2;
         DecimalFormat myformat = new DecimalFormat("######0.0");
         return myformat.format(kg);
     }
 
-    public static String kgToSt(double kg) {
-        double lb = kg * 10 * 22046 / 1000;
-        int st = (int) (lb / 14);
-        if (st % 2 != 0) {
-            st++;
-        }
-        return String.valueOf(keep2Point((float) st / 100));
-    }
-
-
     public static float keep1Point3(double kg) {
         BigDecimal b = new BigDecimal(kg);
         float f1 = b.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
-        return f1;
-    }
-
-    public static float keep2Point(double kg) {
-        BigDecimal b = new BigDecimal(kg);
-        float f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
         return f1;
     }
 
@@ -55,16 +39,15 @@ public class PPUtil {
      * @return
      */
     public static String getWeight(PPUnitType unit, double htWeightKg) {
-        if (unit == PPUnitType.Unit_KG) {
+        if (unit ==PPUnitType.Unit_KG) {
             return keep1Point3(htWeightKg) + "kg";
         } else if (unit == PPUnitType.Unit_LB) {
             return kgToLB_ForFatScale(htWeightKg) + "lb";
-        } else if (unit == PPUnitType.Unit_ST_LB) {
-            return kgToSt(htWeightKg) + "st";
         } else {
             return kgToJin(htWeightKg) + "斤";
         }
     }
+
 
 
 }
