@@ -2,6 +2,7 @@ package com.example.pengsiyuan.ppbluetoothle.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -17,6 +18,8 @@ public class BodyDataDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_body_data_detail);
         TextView textView = findViewById(R.id.data_detail);
         PPBodyFatModel bodyData = DataUtil.util().getBodyDataModel();
-        textView.setText(bodyData.toString());
+        if (bodyData != null && !TextUtils.isEmpty(bodyData.toString())) {
+            textView.setText(bodyData.toString());
+        }
     }
 }
