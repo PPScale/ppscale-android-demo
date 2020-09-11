@@ -1,0 +1,3 @@
+[submodule "ppscale"]
+	path = ppscale
+	url = https://gitee.com/ppscale/ppscale.git
