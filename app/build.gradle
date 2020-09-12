@@ -38,6 +38,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation project(':ppscale')
-//    implementation 'com.peng.ppscale:ppscale-new-master:0.0.1'
+//    implementation (name: 'ppscale', ext: 'aar')
+    implementation 'com.peng.ppscale:ppscale-new-master:0.0.3'
 
 }
