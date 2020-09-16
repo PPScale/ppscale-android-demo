@@ -39,6 +39,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation project(':ppscale')
 //    implementation (name: 'ppscale', ext: 'aar')
-    implementation 'com.peng.ppscale:ppscale-new-master:0.0.3'
+//    implementation 'com.peng.ppscale:ppscale-new-master:0.0.3'
 
 }
