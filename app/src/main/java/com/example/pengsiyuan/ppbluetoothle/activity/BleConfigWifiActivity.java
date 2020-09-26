@@ -1,33 +1,18 @@
 package com.example.pengsiyuan.ppbluetoothle.activity;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.pengsiyuan.ppbluetoothle.DBManager;
 import com.example.pengsiyuan.ppbluetoothle.R;
-import com.example.pengsiyuan.ppbluetoothle.model.DeviceModel;
-import com.example.pengsiyuan.ppbluetoothle.util.PPUtil;
 import com.peng.ppscale.business.ble.BleOptions;
 import com.peng.ppscale.business.ble.PPScale;
-import com.peng.ppscale.business.ble.bmdj.PPBMDJConnectInterface;
 import com.peng.ppscale.business.ble.configWifi.PPConfigWifiInterface;
 import com.peng.ppscale.business.ble.listener.PPBleStateInterface;
-import com.peng.ppscale.business.ble.listener.PPHistoryDataInterface;
-import com.peng.ppscale.business.ble.listener.PPLockDataInterface;
-import com.peng.ppscale.business.ble.listener.PPProcessDateInterface;
 import com.peng.ppscale.business.ble.listener.ProtocalFilterImpl;
-import com.peng.ppscale.business.device.PPDeviceType;
 import com.peng.ppscale.business.state.PPBleSwitchState;
 import com.peng.ppscale.business.state.PPBleWorkState;
 import com.peng.ppscale.util.Logger;
-import com.peng.ppscale.vo.PPBodyBaseModel;
-import com.peng.ppscale.vo.PPBodyFatModel;
-import com.peng.ppscale.vo.PPDeviceModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BleConfigWifiActivity extends AppCompatActivity {
 
@@ -41,6 +26,11 @@ public class BleConfigWifiActivity extends AppCompatActivity {
 
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
+            /**
+             * wifi设备配网成功并获取到SN
+             *
+             * @param sn 设备识别码
+             */
             @Override
             public void monitorConfigState(String sn) {
                 //拿到sn 处理业务逻辑
@@ -57,6 +47,19 @@ public class BleConfigWifiActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 参数配置 绑定时请确保WIFI是2.4G，并且账号密码正确
+     *
+     * @param password     WIFI密码
+     * @param featuresFlag 具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI}
+     *                     具备的能力，体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
+     *                     具备的能力，脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
+     *                     具备的能力，心率秤{@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
+     *                     具备的能力，离线秤{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
+     *                     具备的能力，闭目单脚秤{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
+     * @return
+     * @parm ssid          WIFI账号  不可为空
+     */
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
@@ -97,8 +100,4 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         }
     };
 
-    private ProtocalFilterImpl getProtocalFilter() {
-        ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
-        return protocalFilter;
-    }
 }

@@ -50,9 +50,9 @@
     4. 在“绑定设备”和“上秤称重”页面接收到外设返回的数据后，会自动停止扫描并断开与外设的连接，然后把数据通过回调的方式传回“主页信息”更新体重一栏，具体的数据可以去“ 数据详情”页查看。
     
        
-## Ⅲ .ppscalelib的使用
+## Ⅲ .ppscalelib在蓝牙设备的使用
     
-###### 1.1 绑定或扫描指定设备
+###### 1.1 绑定或扫描指定蓝牙设备
 
         //绑定设备和扫描设备的区别在于  searchType  0绑定设备 1扫描指定设备
         //setProtocalFilterImpl() 接收数据回调接口，过程数据、锁定数据、历史数据，
@@ -263,10 +263,65 @@
   注意：在使用时拿到对象，请调用对应的get方法来获取对应的值
   
 
-## IV .版本更新说明
+## IV .ppscalelib在WIFI设备的使用
+
+###### 2.0 蓝牙配网
+
+具体可参考：{@link BleConfigWifiActivity}
+        
+       
+        ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
+        //监听配网结果 setConfigWifiInterface()
+        protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
+            
+            /**
+             * wifi设备配网成功并获取到SN
+             *
+             * @param sn 设备识别码
+             */
+             @Override
+             public void monitorConfigState(String sn) {
+                 //拿到sn 处理业务逻辑
+                 Logger.e("xxxxxxxxxxxx-" + sn);
+             }
+         });
+        
+        ppScale = new PPScale.Builder(this)
+                   .setProtocalFilterImpl(protocalFilter)
+                   .setBleOptions(getBleOptions())
+                   .setBleStateInterface(bleStateInterface)
+                   .build();
+        ppScale.startSearchBluetoothScaleWithMacAddressList();
+
+WIFI参数配置
+
+        /**
+            * 参数配置 绑定时请确保WIFI是2.4G，并且账号密码正确
+            *
+            * @param password     WIFI密码
+            * @param featuresFlag 具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI}                      
+            * @parm ssid          WIFI账号  不可为空
+            * @return
+            */
+           private BleOptions getBleOptions() {
+               return new BleOptions.Builder()
+                       .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
+                       .setPassword("12345678")
+                       .setSsid("IT05-2.4G")
+                       .build();
+           }
+
+蓝牙状态监听，请参考本文档   1.3  PPBleStateInterface       
+
+
+## V .版本更新说明
    
-    ----1.0.0-----
+    ----0.0.1-----
     1、增加maven配置  2、增加兼容BodyFat Scale1
+    ----0.0.2-----
+    1、增加蓝牙WIFI配网功能
+    ----0.0.3-----
+    1、优化蓝牙配网功能  2、提高广播数据兼容性
     
 Contact Developer：
 Email: yanfabu-5@lefu.cc

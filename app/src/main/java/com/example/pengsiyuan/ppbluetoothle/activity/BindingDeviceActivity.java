@@ -64,6 +64,20 @@ public class BindingDeviceActivity extends Activity {
         bindingDevice();
     }
 
+    /**
+     * 参数配置
+     *
+     * @param featuresFlag 为了更快的搜索你的设备，你可以选择你需要使用的设备能力
+     *                     具备的能力，体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
+     *                     具备的能力，脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
+     *                     具备的能力，心率秤{@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
+     *                     具备的能力，离线秤{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
+     *                     具备的能力，闭目单脚秤{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
+     *                     具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI} 请参考{@link BleConfigWifiActivity}
+     *                     具备的能力，所有秤{@link BleOptions.ScaleFeatures#FEATURES_ALL}
+     * @return
+     * @parm unitType 单位，用于秤端切换单位
+     */
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_ALL)
@@ -71,9 +85,18 @@ public class BindingDeviceActivity extends Activity {
                 .build();
     }
 
+    /**
+     * 解析数据回调
+     *
+     * @return
+     */
     private ProtocalFilterImpl getProtocalFilter() {
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setPPProcessDateInterface(new PPProcessDateInterface() {
+            /**
+             * 过程数据
+             * @param bodyBaseModel
+             */
             @Override
             public void monitorProcessData(PPBodyBaseModel bodyBaseModel) {
                 Logger.d("bodyBaseModel scaleName " + bodyBaseModel.getScaleName());
@@ -82,6 +105,12 @@ public class BindingDeviceActivity extends Activity {
             }
         });
         protocalFilter.setPPLockDataInterface(new PPLockDataInterface() {
+            /**
+             * 锁定数据
+             *
+             * @param bodyFatModel
+             * @param deviceModel
+             */
             @Override
             public void monitorLockData(PPBodyFatModel bodyFatModel, PPDeviceModel deviceModel) {
                 if (bodyFatModel.isHeartRateEnd()) {
@@ -104,6 +133,13 @@ public class BindingDeviceActivity extends Activity {
         if (searchType != 0) {
             //Do not receive offline data when binding the device， If you need to receive offline data, please implement this interface
             protocalFilter.setPPHistoryDataInterface(new PPHistoryDataInterface() {
+                /**
+                 * 历史数据
+                 *
+                 * @param bodyBaseModel
+                 * @param isEnd
+                 * @param dateTime
+                 */
                 @Override
                 public void monitorHistoryData(PPBodyFatModel bodyBaseModel, boolean isEnd, String dateTime) {
                     if (bodyBaseModel != null) {
@@ -127,6 +163,7 @@ public class BindingDeviceActivity extends Activity {
 
     private void bindingDevice() {
         if (searchType == 0) {
+            //绑定新设备
             ppScale = new PPScale.Builder(this)
                     .setProtocalFilterImpl(getProtocalFilter())
                     .setBleOptions(getBleOptions())
@@ -135,6 +172,7 @@ public class BindingDeviceActivity extends Activity {
                     .build();
             ppScale.startSearchBluetoothScaleWithMacAddressList();
         } else {
+            //绑定已有设备
             List<DeviceModel> deviceList = DBManager.manager().getDeviceList();
             List<String> addressList = new ArrayList<>();
             for (DeviceModel deviceModel : deviceList) {

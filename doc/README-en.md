@@ -249,6 +249,65 @@ Finally you need to call the stopSearch method before leaving the page. For spec
 
 Note: When you get the object when using it, please call the corresponding get method to get the corresponding value
 
+## IV .ppscalelib在WIFI设备的使用
+
+###### 2.0 蓝牙配网
+
+Specific reference：{@link BleConfigWifiActivity}
+
+        ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
+        //监听配网结果 setConfigWifiInterface()
+        protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
+            
+            /**
+             * wifi设备配网成功并获取到SN
+             *
+             * @param sn 设备识别码
+             */
+             @Override
+             public void monitorConfigState(String sn) {
+                 //拿到sn 处理业务逻辑
+                 Logger.e("xxxxxxxxxxxx-" + sn);
+             }
+         });
+        
+        ppScale = new PPScale.Builder(this)
+                   .setProtocalFilterImpl(protocalFilter)
+                   .setBleOptions(getBleOptions())
+                   .setBleStateInterface(bleStateInterface)
+                   .build();
+        ppScale.startSearchBluetoothScaleWithMacAddressList();
+
+WIFI parameter configuration
+
+        /**
+            * 参数配置 绑定时请确保WIFI是2.4G，并且账号密码正确
+            *
+            * @param password     WIFI密码
+            * @param featuresFlag 具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI}                      
+            * @parm ssid          WIFI账号  不可为空
+            * @return
+            */
+           private BleOptions getBleOptions() {
+               return new BleOptions.Builder()
+                       .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
+                       .setPassword("12345678")
+                       .setSsid("IT05-2.4G")
+                       .build();
+           }
+
+Bluetooth status monitoring, please refer to this document:   1.3  PPBleStateInterface       
+
+
+## V .Version update instructions
+   
+    ----0.0.1-----
+    1、Add maven configuration  2、Increase compatibility 'BodyFat Scale1'
+    ----0.0.2-----
+    1、Add Bluetooth WIFI distribution network function
+    ----0.0.3-----
+    1、Optimize Bluetooth distribution network function  2、Improve broadcast data compatibility
+
 
 Contact Developer：
 Email: yanfabu-5@lefu.cc
