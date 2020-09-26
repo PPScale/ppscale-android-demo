@@ -1,9 +1,12 @@
 package com.example.pengsiyuan.ppbluetoothle.util;
 
+import com.peng.ppscale.business.device.DeviceManager;
 import com.peng.ppscale.business.device.PPUnitType;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.List;
 
 public class PPUtil {
 
@@ -47,6 +50,13 @@ public class PPUtil {
         return f1;
     }
 
+    //保留两位小数的称
+    List<String> Point2_Scale_List = Arrays.asList(
+            DeviceManager.HEARTRATE_SCALE,//心率称
+            DeviceManager.WEIGHT_SCALE, //体重秤
+            DeviceManager.BODYFAT_SCALE_1, //helen客户
+            DeviceManager.HEALTH_SCALE2
+    );
 
     /**
      * 传入kg，根据重量单位得出相应值
