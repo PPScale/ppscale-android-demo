@@ -100,4 +100,10 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ppScale.disConnect();
+        ppScale.stopSearch();
+    }
 }
