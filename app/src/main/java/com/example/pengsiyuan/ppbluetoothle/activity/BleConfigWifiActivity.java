@@ -64,7 +64,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
                 .setPassword("12345678")
-                .setSsid("IT05-2.4G")
+                .setSsid("取个什么名字呢？")
                 .build();
     }
 
