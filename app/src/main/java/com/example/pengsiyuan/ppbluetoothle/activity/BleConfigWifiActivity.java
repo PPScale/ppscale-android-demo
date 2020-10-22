@@ -35,6 +35,8 @@ public class BleConfigWifiActivity extends AppCompatActivity {
             public void monitorConfigState(String sn) {
                 //拿到sn 处理业务逻辑
                 Logger.e("xxxxxxxxxxxx-" + sn);
+                ppScale.stopWifiConfig();
+                finish();
             }
         });
 
@@ -64,7 +66,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
                 .setPassword("12345678")
-                .setSsid("取个什么名字呢？")
+                .setSsid("IT05-2.4G")
                 .build();
     }
 
@@ -103,6 +105,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        ppScale.stopWifiConfig();
         ppScale.disConnect();
         ppScale.stopSearch();
     }

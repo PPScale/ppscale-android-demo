@@ -1,3 +1,7 @@
 [submodule "ppscale"]
 	path = ppscale
 	url = https://gitee.com/ppscale/ppscale.git
+[submodule "bluetoothkit"]
+	path = bluetoothkit
+	url = https://gitee.com/ppscale/bluetoothkit.git
+	active = true

@@ -1,1 +1,2 @@
+include ':bluetoothkit'
 include ':app', ':ppscale'
