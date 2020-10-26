@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (bodyData != null) {
             String weightStr = PPUtil.getWeight(this.unit, bodyData.getPpWeightKg());
-            weightTextView.setText("体重： " + weightStr);
+            weightTextView.setText(getString(R.string.body_weight_) + weightStr);
         }
     }
 
@@ -288,17 +288,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDialog() {
-        String content = "请选择功能";
+        String content = getString(R.string.please_select_function);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage(content);
-        builder.setPositiveButton("闭目单脚", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.bmdj, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, BMDJConnectActivity.class);
                 startActivity(intent);
             }
         });
-        builder.setNegativeButton("测量体重", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.measure_weight, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (PPScale.isBluetoothOpened()) {

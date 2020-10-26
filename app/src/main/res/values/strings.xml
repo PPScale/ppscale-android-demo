@@ -2,4 +2,23 @@
     <string name="app_name">PPBluetoothLE</string>
     <string name="height">身高（厘米）</string>
     <string name="_30_220">取值范围：30-220</string>
+    <string name="value_range_30_220">取值范围：30-220</string>
+    <string name="age">年龄（岁）</string>
+    <string name="unit">单位</string>
+    <string name="gender">性别</string>
+    <string name="user_group">用户组</string>
+    <string name="this_weighing_infomation">本次称重信息：（详细信息请点击数据详情）</string>
+    <string name="body_weight_">体重：</string>
+    <string name="data_details">数据详情</string>
+    <string name="blutooth_distribution_net">蓝牙配网</string>
+    <string name="binding_device">绑定设备</string>
+    <string name="weigh_on_the_scale">上秤称重</string>
+    <string name="equipment_management">设备管理</string>
+    <string name="unit_normal">0:kg，1:LB，2:斤, 3: ST:LB</string>
+    <string name="sex_normal">0为女，1为男</string>
+    <string name="value_range_age">取值范围：10-99</string>
+    <string name="value_range_group">取值范围：0-9</string>
+    <string name="please_select_function">请选择功能</string>
+    <string name="bmdj">闭目单脚</string>
+    <string name="measure_weight">测量体重</string>
 </resources>
