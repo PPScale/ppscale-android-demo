@@ -190,13 +190,13 @@ public class BindingDeviceActivity extends Activity {
     }
 
     private void showDialog(final PPDeviceModel deviceModel, final PPBodyFatModel bodyDataModel) {
-        String content = "是否保存当前体重" + PPUtil.getWeight(unitType, bodyDataModel.getPpWeightKg());
+        String content = getString(R.string.whether_to_save_the_) + PPUtil.getWeight(unitType, bodyDataModel.getPpWeightKg());
         if (builder == null) {
             builder = new AlertDialog.Builder(BindingDeviceActivity.this);
         }
-        builder.setTitle("这是您的数据么？");
+        builder.setTitle(R.string.is_this_your_data);
         builder.setMessage(content);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.corfirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DBManager.manager().insertDevice(deviceModel);
@@ -205,7 +205,7 @@ public class BindingDeviceActivity extends Activity {
                 dismissSelf();
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 //                ppScale.reSearchDevice();
@@ -228,30 +228,30 @@ public class BindingDeviceActivity extends Activity {
         @Override
         public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
             if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
-                Logger.d("设备已连接");
+                Logger.d(getString(R.string.device_connected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {
-                Logger.d("设备连接中");
+                Logger.d(getString(R.string.device_connecting));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
-                Logger.d("设备已断开");
+                Logger.d(getString(R.string.device_disconnected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateStop) {
-                Logger.d("停止扫描");
+                Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
-                Logger.d("扫描中");
+                Logger.d(getString(R.string.scanning));
             } else {
-                Logger.e("蓝牙状态异常");
+                Logger.e(getString(R.string.bluetooth_status_is_abnormal));
             }
         }
 
         @Override
         public void monitorBluetoothSwitchState(PPBleSwitchState ppBleSwitchState) {
             if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOff) {
-                Logger.e("系统蓝牙断开");
-                Toast.makeText(BindingDeviceActivity.this, "系统蓝牙断开", Toast.LENGTH_SHORT).show();
+                Logger.e(getString(R.string.system_bluetooth_disconnect));
+                Toast.makeText(BindingDeviceActivity.this, getString(R.string.system_bluetooth_disconnect), Toast.LENGTH_SHORT).show();
             } else if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOn) {
-                Logger.d("系统蓝牙打开");
-                Toast.makeText(BindingDeviceActivity.this, "系统蓝牙打开", Toast.LENGTH_SHORT).show();
+                Logger.d(getString(R.string.system_blutooth_on));
+                Toast.makeText(BindingDeviceActivity.this, getString(R.string.system_blutooth_on), Toast.LENGTH_SHORT).show();
             } else {
-                Logger.e("系统蓝牙异常");
+                Logger.e(getString(R.string.system_bluetooth_abnormal));
             }
         }
     };

@@ -22,4 +22,18 @@
 	<string name="please_select_function">Please select</string>
 	<string name="bmdj">Eyes closed one leg</string>
 	<string name="measure_weight">Measurement of body weight</string>
+	<string name="whether_to_save_the_">Whether to save the current weight</string>
+	<string name="is_this_your_data">This is what your data?</string>
+	<string name="corfirm">determine</string>
+	<string name="cancle">cancel</string>
+	<string name="current_weight">Current weight</string>
+	<string name="device_connected">The device is connected</string>
+	<string name="device_connecting">Device connection</string>
+	<string name="device_disconnected">Device disconnected</string>
+	<string name="stop_scanning">Stop scanning</string>
+	<string name="scanning">Scan</string>
+	<string name="bluetooth_status_is_abnormal">Bluetooth is abnormal</string>
+	<string name="system_bluetooth_disconnect">Disconnect the Bluetooth system</string>
+	<string name="system_blutooth_on">Open the Bluetooth system</string>
+	<string name="system_bluetooth_abnormal">Bluetooth system abnormalities</string>
 </resources>

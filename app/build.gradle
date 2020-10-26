@@ -1,14 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.example.pengsiyuan.ppbluetoothle"
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode LIB_VERSION_CODE as int
+        versionName LIB_VERSION
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,6 +31,15 @@ android {
         targetGenDir 'src/main/java' //指定生成代码的目录
         daoPackage 'com.example.pengsiyuan.ppbluetoothle.dao'//生成代码到具体包下
     }
+
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "PPScale_${variant.versionName}_${variant.name}_${releaseTime()}.apk"
+        }
+    }
+
+
 }
 
 dependencies {

@@ -21,4 +21,18 @@
     <string name="please_select_function">请选择功能</string>
     <string name="bmdj">闭目单脚</string>
     <string name="measure_weight">测量体重</string>
+    <string name="whether_to_save_the_">是否保存当前体重</string>
+    <string name="is_this_your_data">这是您的数据么？</string>
+    <string name="corfirm">确定</string>
+    <string name="cancle">取消</string>
+    <string name="current_weight">当前重量</string>
+    <string name="device_connected">设备已连接</string>
+    <string name="device_connecting">设备连接中</string>
+    <string name="device_disconnected">设备已断开</string>
+    <string name="stop_scanning">停止扫描</string>
+    <string name="scanning">扫描中</string>
+    <string name="bluetooth_status_is_abnormal">蓝牙状态异常</string>
+    <string name="system_bluetooth_disconnect">系统蓝牙断开</string>
+    <string name="system_blutooth_on">系统蓝牙打开</string>
+    <string name="system_bluetooth_abnormal">系统蓝牙异常</string>
 </resources>

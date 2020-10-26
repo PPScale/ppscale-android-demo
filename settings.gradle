@@ -1,2 +1,2 @@
-include ':bluetoothkit'
-include ':app', ':ppscale'
+//include ':bluetoothkit'
+include ':app'//, ':ppscale'
