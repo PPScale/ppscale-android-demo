@@ -23,7 +23,7 @@
        
         dependencies {
             、、、
-            implementation 'com.peng.ppscale:ppscale-new-master:0.0.1'     
+                implementation 'com.peng.ppscale:ppscale-new-master:0.0.3.6'     
         }
         
         
