@@ -13,6 +13,7 @@ import com.peng.ppscale.business.ble.listener.ProtocalFilterImpl;
 import com.peng.ppscale.business.state.PPBleSwitchState;
 import com.peng.ppscale.business.state.PPBleWorkState;
 import com.peng.ppscale.util.Logger;
+import com.peng.ppscale.vo.PPDeviceModel;
 
 public class BleConfigWifiActivity extends AppCompatActivity {
 
@@ -26,15 +27,17 @@ public class BleConfigWifiActivity extends AppCompatActivity {
 
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
+
             /**
              * wifi设备配网成功并获取到SN
              *
              * @param sn 设备识别码
              */
             @Override
-            public void monitorConfigState(String sn) {
+            public void monitorConfigState(String sn, PPDeviceModel deviceModel) {
                 //拿到sn 处理业务逻辑
                 Logger.e("xxxxxxxxxxxx-" + sn);
+                Logger.e("xxxxxxxxxxxx-deviceName = " + deviceModel.getDeviceName() + " mac = " + deviceModel.getDeviceMac());
                 ppScale.stopWifiConfig();
                 finish();
             }
