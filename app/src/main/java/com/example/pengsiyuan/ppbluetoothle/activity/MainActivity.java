@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     PPUnitType unit = PPUnitType.Unit_KG;
     PPUserSex sex = PPUserSex.PPUserSexMale;
     int group = 0;
+    int peopleMode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,6 +231,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //用户类型
+        EditText groupPeopleMode = findViewById(R.id.editText);
+        groupPeopleMode.setText("0");
+        groupPeopleMode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String number = s.toString();
+                if (number.length() > 0) {
+                    int group = Integer.parseInt(number);
+                    MainActivity.this.peopleMode = group;
+                }
+            }
+        });
     }
 
     @Override
@@ -256,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 .setHeight(this.height)
                 .setGroupNum(this.group)
                 .setSex(this.sex)
+                .setPeopleType(peopleMode)
                 .build();
         DataUtil.util().setUserModel(userModel);
     }

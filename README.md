@@ -328,6 +328,8 @@ WIFI参数配置
     1、增加Health Scale5
      ----0.0.3.6-----
     1、蓝牙配网增加蓝牙设备信息返回
+     ----0.0.4.0-----
+    1、增加运动员模式
     
 Contact Developer：
 Email: yanfabu-5@lefu.cc
