@@ -170,7 +170,7 @@ public class BindingDeviceActivity extends Activity {
 //                    .setDeviceList(null)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList();
+            ppScale.startSearchBluetoothScaleWithMacAddressList(30*1000);
         } else {
             //绑定已有设备
             List<DeviceModel> deviceList = DBManager.manager().getDeviceList();
@@ -184,7 +184,7 @@ public class BindingDeviceActivity extends Activity {
                     .setDeviceList(addressList)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList();
+            ppScale.startSearchBluetoothScaleWithMacAddressList(30*1000);
         }
 
     }
