@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.pengsiyuan.ppbluetoothle.dao.DeviceModelDao;
 import com.example.pengsiyuan.ppbluetoothle.model.DeviceModel;
+import com.peng.ppscale.business.device.DeviceManager;
 import com.peng.ppscale.vo.PPDeviceModel;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class DBManager {
         List<DeviceModel> deviceModelList = deviceModelDao.loadAll();
         for (DeviceModel model : deviceModelList
         ) {
-            PPDeviceModel deviceModel = new PPDeviceModel(model.getDeviceMac(), model.getDeviceName(), model.getDeviceType());
+            PPDeviceModel deviceModel = new PPDeviceModel(model.getDeviceMac(), model.getDeviceName(), model.getDeviceType(), DeviceManager.getScaleType(model.getDeviceName()));
             deviceList.add(deviceModel);
         }
         return deviceList;
