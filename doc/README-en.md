@@ -243,11 +243,45 @@ Finally you need to call the stopSearch method before leaving the page. For spec
     protected double ppBonePercentage;                              //Bone Percentage(%)
     protected double ppBodyMuscleControlKg;                      //Muscle control mass(kg)
     protected double ppVFPercentage;                                //Subcutaneous fat(%)
-    protected String ppBodyHealth;                                         //Body Health
-    protected String ppFatGrade;                                             //Fat Grade
-    protected String ppBodyHealthGrade;                               //Body Health Grade
+    protected PPBodyEnum.PPBodyGrade ppBodyHealth;                            //Body Health
+    protected PPBodyEnum.PPBodyFatGrade ppFatGrade;                           //Fat Grade
+    protected PPBodyEnum.PPBodyHealthAssessment ppBodyHealthGrade;            //Body Health Grade
+    protected PPBodyEnum.PPBodyfatErrorType ppBodyfatErrorType;                //Error type
 
 Note: When you get the object when using it, please call the corresponding get method to get the corresponding value
+
+###### 1.8  PPBodyFatModel Parameter Description
+  
+  1.Error type: PPBodyEnum.PPBodyfatErrorType
+  
+      PPBodyfatErrorTypeNone(0),          //!< No error (all parameters can be read)
+      PPBodyfatErrorTypeImpedance(-1),    //!< If the impedance is wrong, when the impedance is wrong, the parameters other than BMI/idealWeightKg will not be calculated (write 0)
+      PPBodyfatErrorTypeAge(-1),          //!< The age parameter is wrong, and it needs to be between 6 and 99 years old (not counting parameters other than BMI/idealWeightKg)
+      PPBodyfatErrorTypeWeight(-2),       //!< The weight parameter is wrong, it needs to be 10 ~ 200kg (all parameters will not be calculated if it is wrong)
+      PPBodyfatErrorTypeHeight(-3);       //!< The height parameter is wrong, it needs to be 90 ~ 220cm (not counting all parameters)
+
+  2.Body Health: PPBodyEnum.PPBodyfatErrorType
+  
+      PPBodyGradeThin(0),             //!< Lean
+      PPBodyGradeLThinMuscle(1),      //!< Standard
+      PPBodyGradeMuscular(2),         //!< Super heavy
+      PPBodyGradeLackofexercise(3);   //!< Obese
+
+  3.肥胖等级 PPBodyEnum.PPBodyfatErrorType
+  
+      PPBodyGradeFatOne(0),             //!< Obesity Grade 1
+      PPBodyGradeLFatTwo(1),            //!< Obesity Grade 2
+      PPBodyGradeFatThree(2),           //!< Obesity Grade 3
+      PPBodyGradeFatFour(-1);           //!< Parameter error
+  
+  4.健康等级 PPBodyEnum.PPBodyfatErrorType
+  
+      PPBodyAssessment1(0),             //!< Health risks
+      PPBodyAssessment2(1),             //!< Sub-health
+      PPBodyAssessment3(2),             //!< general
+      PPBodyAssessment4(3),             //!< good
+      PPBodyAssessment5(4),             //!< very good
+      PPBodyAssessmentError(-1);        //!< Parameter error
 
 ## IV .ppscalelib在WIFI设备的使用
 
