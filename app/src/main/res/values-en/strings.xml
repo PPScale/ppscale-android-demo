@@ -12,6 +12,7 @@
 	<string name="body_weight_">body weight:</string>
 	<string name="data_details">Data details</string>
 	<string name="blutooth_distribution_net">Bluetooth distribution network</string>
+    <string name="hold_baby">Hold baby weighting</string>
 	<string name="binding_device">Binding Equipment</string>
 	<string name="weigh_on_the_scale">Weighing on the scale</string>
 	<string name="equipment_management">Device Management</string>

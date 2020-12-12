@@ -366,6 +366,8 @@ WIFI参数配置
     1、增加LF_SC脂肪广播秤
     ----0.0.3.9-----
     1、增加PPBodyEnum.kt 增加错误类型输出、修改身体类型、肥胖等级、健康等级回调方式
+    ----0.0.4-----
+    1、增加婴儿模式
     
 Contact Developer：
 Email: yanfabu-5@lefu.cc

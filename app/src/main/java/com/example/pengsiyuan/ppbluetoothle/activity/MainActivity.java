@@ -27,7 +27,7 @@ import com.peng.ppscale.vo.PPUserModel;
 import com.peng.ppscale.vo.PPUserSex;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView weightTextView;
     int height = 180;
@@ -43,69 +43,11 @@ public class MainActivity extends AppCompatActivity {
         weightTextView = findViewById(R.id.weightTextView);
         requestPower();
 
-        Button mBtnConfigWifi = findViewById(R.id.wificonfigBtn);
-        mBtnConfigWifi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (PPScale.isBluetoothOpened()) {
-                    Intent intent = new Intent(MainActivity.this, BleConfigWifiActivity.class);
-                    startActivity(intent);
-                } else {
-                    PPScale.openBluetooth();
-                }
-            }
-        });
-
-        Button mBtnBindingDeice = findViewById(R.id.bindingDeviceBtn);
-        mBtnBindingDeice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (PPScale.isBluetoothOpened()) {
-                    Intent intent = new Intent(MainActivity.this, BindingDeviceActivity.class);
-                    intent.putExtra(BindingDeviceActivity.UNIT_TYPE, unit.getType());
-                    intent.putExtra(BindingDeviceActivity.SEARCH_TYPE, 0);
-                    startActivity(intent);
-                } else {
-                    PPScale.openBluetooth();
-                }
-            }
-        });
-
-        Button mBtnScaleWeight = findViewById(R.id.scaleWeightBtn);
-        mBtnScaleWeight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                showDialog();
-
-                if (PPScale.isBluetoothOpened()) {
-                    Intent intent = new Intent(MainActivity.this, BindingDeviceActivity.class);
-                    intent.putExtra(BindingDeviceActivity.UNIT_TYPE, unit.getType());
-                    intent.putExtra(BindingDeviceActivity.SEARCH_TYPE, 1);
-                    startActivity(intent);
-                } else {
-                    PPScale.openBluetooth();
-                }
-            }
-        });
-
-        Button mBtnDeviceList = findViewById(R.id.deviceManagerBtn);
-        mBtnDeviceList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DeviceListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button mBtnDataDetail = findViewById(R.id.dataDetailBtn);
-        mBtnDataDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BodyDataDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        findViewById(R.id.holdBabyBtn).setOnClickListener(this);
+        findViewById(R.id.wificonfigBtn).setOnClickListener(this);
+        findViewById(R.id.bindingDeviceBtn).setOnClickListener(this);
+        findViewById(R.id.scaleWeightBtn).setOnClickListener(this);
+        findViewById(R.id.dataDetailBtn).setOnClickListener(this);
 
         // 身高
         EditText heightET = findViewById(R.id.editText3);
@@ -314,5 +256,57 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.holdBabyBtn:
+                //抱婴称重 holebaby
+                if (PPScale.isBluetoothOpened()) {
+                    Intent intent = new Intent(MainActivity.this, BabyHoldScaleActivity.class);
+                    startActivity(intent);
+                } else {
+                    PPScale.openBluetooth();
+                }
+                break;
+            case R.id.wificonfigBtn:
+                //wifi config
+                if (PPScale.isBluetoothOpened()) {
+                    Intent intent = new Intent(MainActivity.this, BleConfigWifiActivity.class);
+                    startActivity(intent);
+                } else {
+                    PPScale.openBluetooth();
+                }
+                break;
+            case R.id.scaleWeightBtn:
+                if (PPScale.isBluetoothOpened()) {
+                    Intent intent = new Intent(MainActivity.this, BindingDeviceActivity.class);
+                    intent.putExtra(BindingDeviceActivity.UNIT_TYPE, unit.getType());
+                    intent.putExtra(BindingDeviceActivity.SEARCH_TYPE, 1);
+                    startActivity(intent);
+                } else {
+                    PPScale.openBluetooth();
+                }
+                break;
+            case R.id.bindingDeviceBtn:
+                if (PPScale.isBluetoothOpened()) {
+                    Intent intent = new Intent(MainActivity.this, BindingDeviceActivity.class);
+                    intent.putExtra(BindingDeviceActivity.UNIT_TYPE, unit.getType());
+                    intent.putExtra(BindingDeviceActivity.SEARCH_TYPE, 0);
+                    startActivity(intent);
+                } else {
+                    PPScale.openBluetooth();
+                }
+                break;
+            case R.id.deviceManagerBtn:
+                Intent intent = new Intent(MainActivity.this, DeviceListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.dataDetailBtn:
+                startActivity(new Intent(MainActivity.this, BodyDataDetailActivity.class));
+                break;
+
+        }
+    }
 
 }
