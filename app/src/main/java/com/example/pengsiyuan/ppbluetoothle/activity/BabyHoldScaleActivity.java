@@ -2,16 +2,12 @@ package com.example.pengsiyuan.ppbluetoothle.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pengsiyuan.ppbluetoothle.R;
-import com.example.pengsiyuan.ppbluetoothle.util.DataUtil;
 import com.peng.ppscale.business.ble.BleOptions;
 import com.peng.ppscale.business.ble.PPScale;
-import com.peng.ppscale.business.ble.babyhold.PPBabyHoldInterface;
-import com.peng.ppscale.business.ble.configWifi.PPConfigWifiInterface;
 import com.peng.ppscale.business.ble.listener.PPBleStateInterface;
 import com.peng.ppscale.business.ble.listener.PPLockDataInterface;
 import com.peng.ppscale.business.ble.listener.PPProcessDateInterface;
@@ -42,8 +38,15 @@ public class BabyHoldScaleActivity extends AppCompatActivity {
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setPPProcessDateInterface(new PPProcessDateInterface() {
             @Override
-            public void monitorProcessData(PPBodyBaseModel bodyBaseModel) {
+            public void monitorProcessData(final PPBodyBaseModel bodyBaseModel) {
                 Logger.d(" progress weight = " + bodyBaseModel.getPpWeightKg());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView7.setText("当前称重");
+                        weightTextView.setText(String.valueOf(bodyBaseModel.getPpWeightKg()));
+                    }
+                });
             }
         });
         protocalFilter.setPPLockDataInterface(new PPLockDataInterface() {
