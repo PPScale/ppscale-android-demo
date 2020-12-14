@@ -13,10 +13,13 @@ import com.peng.ppscale.business.ble.PPScale;
 import com.peng.ppscale.business.ble.babyhold.PPBabyHoldInterface;
 import com.peng.ppscale.business.ble.configWifi.PPConfigWifiInterface;
 import com.peng.ppscale.business.ble.listener.PPBleStateInterface;
+import com.peng.ppscale.business.ble.listener.PPLockDataInterface;
+import com.peng.ppscale.business.ble.listener.PPProcessDateInterface;
 import com.peng.ppscale.business.ble.listener.ProtocalFilterImpl;
 import com.peng.ppscale.business.state.PPBleSwitchState;
 import com.peng.ppscale.business.state.PPBleWorkState;
 import com.peng.ppscale.util.Logger;
+import com.peng.ppscale.vo.PPBodyBaseModel;
 import com.peng.ppscale.vo.PPBodyFatModel;
 import com.peng.ppscale.vo.PPDeviceModel;
 
@@ -37,6 +40,34 @@ public class BabyHoldScaleActivity extends AppCompatActivity {
         initView();
 
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
+        protocalFilter.setPPProcessDateInterface(new PPProcessDateInterface() {
+            @Override
+            public void monitorProcessData(PPBodyBaseModel bodyBaseModel) {
+                Logger.d(" progress weight = " + bodyBaseModel.getPpWeightKg());
+            }
+        });
+        protocalFilter.setPPLockDataInterface(new PPLockDataInterface() {
+            @Override
+            public void monitorLockData(final PPBodyFatModel ppBodyFatModel, PPDeviceModel deviceModel) {
+
+                /**
+                 * 婴儿体重会在大人体重之后返回，必须先秤大人再秤大人抱小孩
+                 */
+                Logger.d(" lock weight = " + ppBodyFatModel.getPpWeightKg());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView7.setText("当前称重");
+                        weightTextView.setText(String.valueOf(ppBodyFatModel.getPpWeightKg()));
+                    }
+                });
+            }
+        });
+
+
+        /*
+        @Deprecated 已过时，请勿使用
         protocalFilter.setBabyHoldInterface(new PPBabyHoldInterface() {
             @Override
             public void monitorFisrtData(final PPBodyFatModel bodyFatModel, PPDeviceModel deviceModel) {
@@ -73,7 +104,7 @@ public class BabyHoldScaleActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
         ppScale = new PPScale.Builder(this)
                 .setProtocalFilterImpl(protocalFilter)
                 .setBleOptions(getBleOptions())
@@ -142,6 +173,7 @@ public class BabyHoldScaleActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //断开蓝牙或退出抱婴模式，请调用disConnect
         ppScale.disConnect();
         ppScale.stopSearch();
     }
