@@ -220,8 +220,11 @@ public class BindingDeviceActivity extends Activity {
     }
 
     private void dismissSelf() {
-        ppScale.stopSearch();
-        finish();
+        if (ppScale != null) {
+            ppScale.disConnect();
+            ppScale.stopSearch();
+        }
+       finish();
     }
 
     PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
@@ -259,15 +262,14 @@ public class BindingDeviceActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ppScale != null) {
-            ppScale.stopSearch();
-        }
+        dismissSelf();
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
             alertDialog = null;
             builder = null;
         }
     }
+
 }
 
 
