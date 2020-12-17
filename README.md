@@ -203,9 +203,47 @@
         age范围是10-99
         sex 0为女 1为男   
              
+      
+###### 1.6 食物秤说明
+   
+   单位枚举类 PPUnitType
+    
+        Unit_KG(0),//KG
+    
+        Unit_LB(1),//LB
+    
+        PPUnitST(2),//ST
+    
+        PPUnitJin(3),//斤
+    
+        PPUnitG(4),//g
+    
+        PPUnitLBOZ(5),//lb:oz
+    
+        PPUnitOZ(6),//oz
+    
+        PPUnitMLWater(7),//ml(water)
+    
+        PPUnitMLMilk(8);//milk
+
+   正负值问题：
+   
+       PPBodyFatModel的字段里:
+       int thanZero; //正负 0表示负值 1 正值
+
+   切换单位调用： 
+   
+        PPScale.changeKitchenScaleUnit(PPUnitType unitType)
+    
+   食物秤归零： 
+        
+        PPScale.toZeroKitchenScale()
+   
+   使用食物秤在不需要连接时，需要手动断开连接
+   
+       PPScale.disConnect()
             
-            
-###### 1.6 蓝牙操作相关
+###### 1.7 蓝牙操作相关
 
 预留蓝牙操作对象
 
@@ -221,8 +259,9 @@
           
 最后你需要在离开页面的之前调用stopSearch方法。
 具体的实现请参考Demo中BindingDeviceActivity和ScaleWeightActivity中的代码。
-  
-###### 1.7  PPBodyFatModel 参数说明
+
+
+###### 1.8  PPBodyFatModel 参数说明
 
     protected int impedance;                                                  //阻抗值（加密）
     //    protected float ppZTwoLegs;                                         //脚对脚阻抗值(Ω), 范围200.0 ~ 1200.0
@@ -231,7 +270,8 @@
     protected int scaleType;                                                  //称类型
     protected boolean isHeartRateEnd = true;                                  //心率结束符
     protected String scaleName;                                               //称名称
-
+    protected int thanZero;                                                    //正负 0表示负值 1 正值
+    protected PPUnitType unit;                                                 //重量单位 默认kg
     protected PPUserModel userModel;
     protected PPUserSex ppSex;                                                //性别
     protected double ppHeightCm;                                              //身高(cm)，需在 90 ~ 220cm
@@ -366,6 +406,8 @@ WIFI参数配置
     1、增加LF_SC脂肪广播秤
     ----0.0.3.9-----
     1、增加PPBodyEnum.kt 增加错误类型输出、修改身体类型、肥胖等级、健康等级回调方式
+    ----0.0.4.1-----
+    增加食物秤兼容11byte
     
 Contact Developer：
 Email: yanfabu-5@lefu.cc

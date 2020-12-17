@@ -37,6 +37,17 @@ public class BindingDeviceActivity extends Activity {
     TextView weightTextView;
     PPScale ppScale;
 
+    /**
+     *     PPUnitKG = 0,
+     *     PPUnitLB = 1,
+     *     PPUnitST = 2,
+     *     PPUnitJin = 3,
+     *     PPUnitG = 4,
+     *     PPUnitLBOZ = 5,
+     *     PPUnitOZ = 6,
+     *     PPUnitMLWater = 7,
+     *     PPUnitMLMilk = 8,
+     */
     public static final String UNIT_TYPE = "unitType";
     //0是绑定设备 1是搜索已有设备
     public static final String SEARCH_TYPE = "SearchType";
@@ -100,7 +111,7 @@ public class BindingDeviceActivity extends Activity {
             @Override
             public void monitorProcessData(PPBodyBaseModel bodyBaseModel) {
                 Logger.d("bodyBaseModel scaleName " + bodyBaseModel.getScaleName());
-                String weightStr = PPUtil.getWeight(unitType, bodyBaseModel.getPpWeightKg());
+                String weightStr = PPUtil.getWeight(bodyBaseModel.getUnit(), bodyBaseModel.getPpWeightKg());
                 weightTextView.setText(weightStr);
             }
         });
@@ -119,7 +130,7 @@ public class BindingDeviceActivity extends Activity {
                     } else {
                         Logger.d("monitorLockData  bodyFatModel heartRate = " + bodyFatModel.getPpHeartRate());
                     }
-                    String weightStr = PPUtil.getWeight(unitType, bodyFatModel.getPpWeightKg());
+                    String weightStr = PPUtil.getWeight(bodyFatModel.getUnit(), bodyFatModel.getPpWeightKg());
                     if (weightTextView != null) {
                         weightTextView.setText(weightStr);
                         showDialog(deviceModel, bodyFatModel);
@@ -190,7 +201,7 @@ public class BindingDeviceActivity extends Activity {
     }
 
     private void showDialog(final PPDeviceModel deviceModel, final PPBodyFatModel bodyDataModel) {
-        String content = getString(R.string.whether_to_save_the_) + PPUtil.getWeight(unitType, bodyDataModel.getPpWeightKg());
+        String content = getString(R.string.whether_to_save_the_) + PPUtil.getWeight(bodyDataModel.getUnit(), bodyDataModel.getPpWeightKg());
         if (builder == null) {
             builder = new AlertDialog.Builder(BindingDeviceActivity.this);
         }
@@ -261,6 +272,7 @@ public class BindingDeviceActivity extends Activity {
         super.onDestroy();
         if (ppScale != null) {
             ppScale.stopSearch();
+            ppScale.disConnect();
         }
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();

@@ -38,8 +38,6 @@ android {
             outputFileName = "PPScale_${variant.versionName}_${variant.name}_${releaseTime()}.apk"
         }
     }
-
-
 }
 
 dependencies {
@@ -52,6 +50,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
 //    implementation project(':ppscale')
 //    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-    implementation 'com.peng.ppscale:ppscale-new-master:0.0.3.9'
+    implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.1'
 
 }

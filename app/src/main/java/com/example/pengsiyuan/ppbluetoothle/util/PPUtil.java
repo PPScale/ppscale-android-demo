@@ -52,6 +52,8 @@ public class PPUtil {
 
     /**
      * 传入kg，根据重量单位得出相应值
+     * 体脂秤一直是kg
+     * 食物秤需要采用秤返回的单位和重量
      *
      * @param htWeightKg
      * @return
@@ -61,10 +63,22 @@ public class PPUtil {
             return keep1Point3(htWeightKg) + "kg";
         } else if (unit == PPUnitType.Unit_LB) {
             return kgToLB_ForFatScale(htWeightKg) + "lb";
-        } else if (unit == PPUnitType.Unit_ST_LB) {
-            return kgToSt(htWeightKg) + "st";
-        } else {
+        } else if (unit == PPUnitType.PPUnitST) {
+            return htWeightKg + "st";
+        } else if (unit == PPUnitType.PPUnitJin) {
             return kgToJin(htWeightKg) + "斤";
+        } else if (unit == PPUnitType.PPUnitG) {
+            return htWeightKg + "g";
+        } else if (unit == PPUnitType.PPUnitLBOZ) {
+            return htWeightKg + "lb:oz";
+        } else if (unit == PPUnitType.PPUnitOZ) {
+            return htWeightKg + "oz";
+        } else if (unit == PPUnitType.PPUnitMLWater) {
+            return htWeightKg + "water";
+        } else if (unit == PPUnitType.PPUnitMLMilk) {
+            return htWeightKg + "milk";
+        } else {
+            return htWeightKg + "kg";
         }
     }
 
