@@ -32,7 +32,6 @@ android {
         daoPackage 'com.example.pengsiyuan.ppbluetoothle.dao'//生成代码到具体包下
     }
 
-
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "PPScale_${variant.versionName}_${variant.name}_${releaseTime()}.apk"
@@ -50,6 +49,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
 //    implementation project(':ppscale')
 //    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-    implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.1'
+    implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.3'
 
 }

@@ -161,7 +161,6 @@ public class BindingDeviceActivity extends Activity {
                 }
             });
         }
-        protocalFilter.setUserModel(userModel);
         return protocalFilter;
     }
 
@@ -179,6 +178,7 @@ public class BindingDeviceActivity extends Activity {
                     .setProtocalFilterImpl(getProtocalFilter())
                     .setBleOptions(getBleOptions())
 //                    .setDeviceList(null)
+                    .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
             ppScale.startSearchBluetoothScaleWithMacAddressList(30*1000);
@@ -193,6 +193,7 @@ public class BindingDeviceActivity extends Activity {
                     .setProtocalFilterImpl(getProtocalFilter())
                     .setBleOptions(getBleOptions())
                     .setDeviceList(addressList)
+                    .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
             ppScale.startSearchBluetoothScaleWithMacAddressList(30*1000);

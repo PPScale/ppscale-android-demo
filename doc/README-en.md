@@ -52,7 +52,8 @@
         //setDeviceList()The parameter of the function is not null，Binding needs to pass null (or not call)，Scan the specified device, please upload the list of the specified device<DeviceModel>。Bind
         //setBleOptions()Bluetooth parameter configuration
         //setBleStateInterface() need parameter PPBleStateInterface，Bluetooth status monitoring callback and system Bluetooth status callback    //startSearchBluetoothScaleWithMacAddressList（）Start scanning device
-    
+        //setUserModel() parameter PPUserModel normal status， setUserModel() is necessary，
+        
         /**
         * sdk entrance, Instance object 
         */
@@ -63,6 +64,7 @@
                            .setBleOptions(getBleOptions())
        //                    .setDeviceList(null)
                            .setBleStateInterface(bleStateInterface)
+                            .setUserModel(userModel);
                            .build();
                    ppScale.startSearchBluetoothScaleWithMacAddressList();
                } else {
@@ -76,6 +78,7 @@
                            .setBleOptions(getBleOptions())
                            .setDeviceList(addressList)
                            .setBleStateInterface(bleStateInterface)
+                           .setUserModel(userModel)
                            .build();
                    ppScale.startSearchBluetoothScaleWithMacAddressList();
                }
@@ -138,8 +141,7 @@ Note: If you need to automatically cycle scan, you need to call again after load
     //Monitor process data setPPProcessDateInterface()
     //Monitor lock data setPPLockDataInterface()
     //Monitor history data setPPHistoryDataInterface()
-    //setUserModel() parameter PPUserModel normal status， setUserModel() is necessary，
-
+   
      ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
             protocalFilter.setPPProcessDateInterface(new PPProcessDateInterface() {
             //process data
@@ -184,7 +186,7 @@ Note: If you need to automatically cycle scan, you need to call again after load
                 }
             });
         }
-        protocalFilter.setUserModel(userModel);
+     
 
 ###### 1.5 PPUserModel Basic information of user
     

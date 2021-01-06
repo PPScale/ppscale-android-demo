@@ -62,7 +62,8 @@
         //setBleOptions()蓝牙参数配置
         //setBleStateInterface() 需要参数PPBleStateInterface，蓝牙状态监控回调和系统蓝牙状态回调
         //startSearchBluetoothScaleWithMacAddressList（）启动扫描设备
-        
+        //setUserModel() 参数PPUserModel 正常情况， setUserModel()是必须的，
+            
        /**
         * sdk入口,实例对象 
         */
@@ -73,6 +74,7 @@
                            .setBleOptions(getBleOptions())
        //                    .setDeviceList(null)
                            .setBleStateInterface(bleStateInterface)
+                           .setUserModel(userModel)
                            .build();
                    ppScale.startSearchBluetoothScaleWithMacAddressList();
                } else {
@@ -86,6 +88,7 @@
                            .setBleOptions(getBleOptions())
                            .setDeviceList(addressList)
                            .setBleStateInterface(bleStateInterface)
+                            .setUserModel(userModel) 参数PPUserModel 正常情况， setUserModel()是必须的，
                            .build();
                    ppScale.startSearchBluetoothScaleWithMacAddressList();
                }
@@ -147,7 +150,6 @@
     //监听过程数据setPPProcessDateInterface()
     //监听锁定数据setPPLockDataInterface()
     //监听历史数据setPPHistoryDataInterface()
-    //setUserModel() 参数PPUserModel 正常情况， setUserModel()是必须的，
    
      ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
             protocalFilter.setPPProcessDateInterface(new PPProcessDateInterface() {
@@ -194,8 +196,7 @@
                     }
                 });
             }
-            protocalFilter.setUserModel(userModel);
-    
+           
 ###### 1.5  PPUserModel   用户基础信息 
         
         userHeight、age、sex必须是真实的 
@@ -408,6 +409,8 @@ WIFI参数配置
     1、增加PPBodyEnum.kt 增加错误类型输出、修改身体类型、肥胖等级、健康等级回调方式
     ----0.0.4.1-----
     增加食物秤兼容11byte
+    ----0.0.4.3-----
+    1、优化频繁连接导致的，一直连接状态下，无法正常上称称重  2、PPUserModel初始化提前
     
 Contact Developer：
 Email: yanfabu-5@lefu.cc
