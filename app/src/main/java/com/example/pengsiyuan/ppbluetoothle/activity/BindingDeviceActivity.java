@@ -38,15 +38,15 @@ public class BindingDeviceActivity extends Activity {
     PPScale ppScale;
 
     /**
-     *     PPUnitKG = 0,
-     *     PPUnitLB = 1,
-     *     PPUnitST = 2,
-     *     PPUnitJin = 3,
-     *     PPUnitG = 4,
-     *     PPUnitLBOZ = 5,
-     *     PPUnitOZ = 6,
-     *     PPUnitMLWater = 7,
-     *     PPUnitMLMilk = 8,
+     * PPUnitKG = 0,
+     * PPUnitLB = 1,
+     * PPUnitST = 2,
+     * PPUnitJin = 3,
+     * PPUnitG = 4,
+     * PPUnitLBOZ = 5,
+     * PPUnitOZ = 6,
+     * PPUnitMLWater = 7,
+     * PPUnitMLMilk = 8,
      */
     public static final String UNIT_TYPE = "unitType";
     //0是绑定设备 1是搜索已有设备
@@ -77,16 +77,19 @@ public class BindingDeviceActivity extends Activity {
 
     /**
      * 参数配置
+     * <p>
+     * @return
      *
-     * @param featuresFlag 为了更快的搜索你的设备，你可以选择你需要使用的设备能力
+     * @param ScaleFeatures 为了更快的搜索你的设备，你可以选择你需要使用的设备能力
      *                     具备的能力，体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
      *                     具备的能力，脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
      *                     具备的能力，心率秤{@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
      *                     具备的能力，离线秤{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
      *                     具备的能力，闭目单脚秤{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
+     *                     具备的能力，秤端计算{@link BleOptions.ScaleFeatures#FEATURES_CALCUTE_IN_SCALE}
      *                     具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI} 请参考{@link BleConfigWifiActivity}
+     *                     具备的能力，食物秤{@link BleOptions.ScaleFeatures#FEATURES_FOOD_SCALE}
      *                     具备的能力，所有秤{@link BleOptions.ScaleFeatures#FEATURES_ALL}
-     * @return
      * @parm unitType 单位，用于秤端切换单位
      */
     private BleOptions getBleOptions() {
@@ -181,7 +184,7 @@ public class BindingDeviceActivity extends Activity {
                     .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList(30*1000);
+            ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
         } else {
             //绑定已有设备
             List<DeviceModel> deviceList = DBManager.manager().getDeviceList();
@@ -196,7 +199,7 @@ public class BindingDeviceActivity extends Activity {
                     .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList(30*1000);
+            ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
         }
 
     }
