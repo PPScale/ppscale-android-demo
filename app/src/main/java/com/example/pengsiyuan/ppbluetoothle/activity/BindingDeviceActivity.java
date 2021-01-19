@@ -110,9 +110,10 @@ public class BindingDeviceActivity extends Activity {
             /**
              * 过程数据
              * @param bodyBaseModel
+             * @param deviceModel
              */
             @Override
-            public void monitorProcessData(PPBodyBaseModel bodyBaseModel) {
+            public void monitorProcessData(PPBodyBaseModel bodyBaseModel, PPDeviceModel deviceModel) {
                 Logger.d("bodyBaseModel scaleName " + bodyBaseModel.getScaleName());
                 String weightStr = PPUtil.getWeight(bodyBaseModel.getUnit(), bodyBaseModel.getPpWeightKg());
                 weightTextView.setText(weightStr);
