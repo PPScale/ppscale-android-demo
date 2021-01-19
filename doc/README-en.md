@@ -17,7 +17,7 @@
     
     dependencies {
         、、、
-        implementation 'com.peng.ppscale:ppscale-new-master:0.0.1'     
+        implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.4'     
     }
     
 ## Ⅱ .Instruction of use
