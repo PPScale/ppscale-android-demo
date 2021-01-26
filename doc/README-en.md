@@ -88,14 +88,20 @@ Note: If you need to automatically cycle scan, you need to call again after load
 ######  1.2 BleOptions Bluetooth parameter configuration
 
         //Configure the type of scale that needs to be scanned default all，Optional 
-                                    FEATURES_WEIGHT, //Weighing scale
-                                    FEATURES_FAT, //Fat scale
-                                    FEATURES_HEART_RATE, //Heart Rate Scale
-                                    FEATURES_HISTORY, //Offline+fat scale
-                                    FEATURES_BMDJ, //Closed eyes single foot + fat scale
-                                    FEATURES_ALL,  //All types
-                                    FEATURES_CUSTORM //customize Choose custom need to set setDeviceList() of PPScale
-        setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_ALL)
+     *                     Capabilities：
+     *                     weighing scale {@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
+     *                     Fat scale {@link BleOptions.ScaleFeatures#FEATURES_FAT}
+     *                     Heart rate scale {@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
+     *                     Offline scale{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
+     *                     Closed eye single foot scale{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
+     *                     Weighing calculation {@link BleOptions.ScaleFeatures#FEATURES_CALCUTE_IN_SCALE}
+     *                     WIFI scale {@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI} 请参考{@link BleConfigWifiActivity}
+     *                     Food scale {@link BleOptions.ScaleFeatures#FEATURES_FOOD_SCALE}
+     *                     All body scales {@link BleOptions.ScaleFeatures#FEATURES_NORMAL}  //Does not include food scale
+     *                     All scales {@link BleOptions.ScaleFeatures#FEATURES_ALL}
+     *                     customize {@link BleOptions.ScaleFeatures#FEATURES_CUSTORM} //If you choose to customize, you need to set PPScale.java-->setDeviceList()
+               
+        setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
         
 ###### 1.3 PPBleStateInterface, Bluetooth status monitoring callback and system Bluetooth status callback
 

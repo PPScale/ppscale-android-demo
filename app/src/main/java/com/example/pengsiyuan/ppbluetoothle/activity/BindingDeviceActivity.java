@@ -81,20 +81,23 @@ public class BindingDeviceActivity extends Activity {
      * @return
      *
      * @param ScaleFeatures 为了更快的搜索你的设备，你可以选择你需要使用的设备能力
-     *                     具备的能力，体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
-     *                     具备的能力，脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
-     *                     具备的能力，心率秤{@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
-     *                     具备的能力，离线秤{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
-     *                     具备的能力，闭目单脚秤{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
-     *                     具备的能力，秤端计算{@link BleOptions.ScaleFeatures#FEATURES_CALCUTE_IN_SCALE}
-     *                     具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI} 请参考{@link BleConfigWifiActivity}
-     *                     具备的能力，食物秤{@link BleOptions.ScaleFeatures#FEATURES_FOOD_SCALE}
-     *                     具备的能力，所有秤{@link BleOptions.ScaleFeatures#FEATURES_ALL}
+     *                     具备的能力：
+     *                     体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
+     *                     脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
+     *                     心率秤{@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
+     *                     离线秤{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
+     *                     闭目单脚秤{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
+     *                     秤端计算{@link BleOptions.ScaleFeatures#FEATURES_CALCUTE_IN_SCALE}
+     *                     WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI} 请参考{@link BleConfigWifiActivity}
+     *                     食物秤{@link BleOptions.ScaleFeatures#FEATURES_FOOD_SCALE}
+     *                     所有人体秤{@link BleOptions.ScaleFeatures#FEATURES_NORMAL}  //不包含食物秤
+     *                     所有秤{@link BleOptions.ScaleFeatures#FEATURES_ALL}
+     *                     自定义{@link BleOptions.ScaleFeatures#FEATURES_CUSTORM} //选则自定义需要设置PPScale的setDeviceList()
      * @parm unitType 单位，用于秤端切换单位
      */
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
-                .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_ALL)
+                .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
                 .setUnitType(unitType)
                 .build();
     }

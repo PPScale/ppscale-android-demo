@@ -97,14 +97,20 @@
     
 ###### 1.2  BleOptions 蓝牙参数配置
 
-    //配置需要扫描的秤类型 默认全部，可选FEATURES_WEIGHT, //体重秤
-                                FEATURES_FAT, //脂肪秤
-                                FEATURES_HEART_RATE, //心率秤
-                                FEATURES_HISTORY, //离线+脂肪秤
-                                FEATURES_BMDJ, //闭目单脚+脂肪秤
-                                FEATURES_ALL,  //全类型
-                                FEATURES_CUSTORM //自定义 选则自定义需要设置PPScale的setDeviceList()
-    setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_ALL)
+    //配置需要扫描的秤类型 默认全部，可选为了更快的搜索你的设备，你可以选择你需要使用的设备能力
+     *                     具备的能力：
+     *                     体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
+     *                     脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
+     *                     心率秤{@link BleOptions.ScaleFeatures#FEATURES_HEART_RATE}
+     *                     离线秤{@link BleOptions.ScaleFeatures#FEATURES_HISTORY}
+     *                     闭目单脚秤{@link BleOptions.ScaleFeatures#FEATURES_BMDJ}
+     *                     秤端计算{@link BleOptions.ScaleFeatures#FEATURES_CALCUTE_IN_SCALE}
+     *                     WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI} 请参考{@link BleConfigWifiActivity}
+     *                     食物秤{@link BleOptions.ScaleFeatures#FEATURES_FOOD_SCALE}
+     *                     所有人体秤{@link BleOptions.ScaleFeatures#FEATURES_NORMAL}  //不包含食物秤
+     *                     所有秤{@link BleOptions.ScaleFeatures#FEATURES_ALL}
+     *                     自定义{@link BleOptions.ScaleFeatures#FEATURES_CUSTORM} //选则自定义需要设置PPScale的setDeviceList()
+    setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
     
 ###### 1.3  PPBleStateInterface，蓝牙状态监控回调和系统蓝牙状态回调
 
