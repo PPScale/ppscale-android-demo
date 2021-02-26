@@ -49,6 +49,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
 //    implementation project(':ppscale')
 //    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-    implementation 'com.peng.ppscale:ppscale-bohe:0.0.4.8'
+    implementation 'com.peng.ppscale:ppscale-bohe:0.0.4.9'
 
 }
