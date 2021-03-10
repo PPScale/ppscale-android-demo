@@ -267,8 +267,35 @@
 最后你需要在离开页面的之前调用stopSearch方法。
 具体的实现请参考Demo中BindingDeviceActivity和ScaleWeightActivity中的代码。
 
+###### 1.8 PPBodyFatModel 实例化说明
+如果是自行解析蓝牙协议数据的，需要实例化该类，来获取对应的其他身体数据，
 
-###### 1.8  PPBodyFatModel 参数说明
+    /**
+     * 单称重
+     *
+     * @param ppWeightKg 体重 必传
+     * @param scaleType  设备类型 {@link com.peng.ppscale.business.device.PPDeviceType#PPDeviceTypeBodyFat} 非必传
+     * @param userModel  用户信息 测脂肪数据必传{@link PPUserModel}
+     * @param scaleName  蓝牙秤名称 非必传
+     */
+    public PPBodyFatModel(double ppWeightKg, String scaleType, PPUserModel userModel, String scaleName) {
+        super(ppWeightKg, scaleType, userModel, scaleName);
+    }
+
+    /**
+     * 测脂
+     *
+     * @param ppWeightKg 体重 必传
+     * @param impedance  加密阻抗 测脂肪数据必传
+     * @param scaleType  设备类型 {@link com.peng.ppscale.business.device.PPDeviceType#PPDeviceTypeBodyFat} 非必传
+     * @param userModel  用户信息 测脂肪数据必传{@link PPUserModel}
+     * @param scaleName  蓝牙秤名称 非必传
+     */
+    public PPBodyFatModel(double ppWeightKg, int impedance, String scaleType, PPUserModel userModel, String scaleName) {
+        super(ppWeightKg, impedance, scaleType, userModel, scaleName, PPUnitType.Unit_KG);
+    }
+
+###### 1.9  PPBodyFatModel 参数说明
 
     protected int impedance;                                                  //阻抗值（加密）
     //    protected float ppZTwoLegs;                                         //脚对脚阻抗值(Ω), 范围200.0 ~ 1200.0
@@ -312,7 +339,7 @@
    
   注意：在使用时拿到对象，请调用对应的get方法来获取对应的值
   
-###### 1.8  PPBodyEnum 参数说明 
+###### 2.0  PPBodyEnum 参数说明 
   
   1.错误类型 PPBodyEnum.PPBodyfatErrorType
   
@@ -348,7 +375,7 @@
 
 ## IV .ppscalelib在WIFI设备的使用
 
-###### 2.0 蓝牙配网
+###### 2.1 蓝牙配网
 
 具体可参考：{@link BleConfigWifiActivity}
         
