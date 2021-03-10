@@ -44,17 +44,6 @@ public class DBManager {
         }
     }
 
-    public List<PPDeviceModel> getSDKDeviceList() {
-        List<PPDeviceModel> deviceList = new ArrayList<>();
-        List<DeviceModel> deviceModelList = deviceModelDao.loadAll();
-        for (DeviceModel model : deviceModelList
-        ) {
-            PPDeviceModel deviceModel = new PPDeviceModel(model.getDeviceMac(), model.getDeviceName(), model.getDeviceType(), DeviceManager.getScaleType(model.getDeviceName()));
-            deviceList.add(deviceModel);
-        }
-        return deviceList;
-    }
-
     public List<DeviceModel> getDeviceList() {
         List<DeviceModel> deviceModelList = deviceModelDao.loadAll();
         return deviceModelList;
