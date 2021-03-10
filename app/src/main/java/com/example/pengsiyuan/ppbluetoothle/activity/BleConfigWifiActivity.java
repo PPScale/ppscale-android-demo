@@ -82,7 +82,9 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                 Logger.d("设备连接中");
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
                 Logger.d("设备已断开");
-            } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateStop) {
+            } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
+                Logger.d("停止扫描");
+            } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
                 Logger.d("停止扫描");
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                 Logger.d("扫描中");

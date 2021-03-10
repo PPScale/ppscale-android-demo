@@ -151,13 +151,13 @@ public class BindingDeviceActivity extends Activity {
 
         protocalFilter.setDeviceInfoInterface(new PPDeviceInfoInterface() {
             @Override
-            public void softwareRevision(String version) {
-                Logger.d("版本号：" + version);
+            public void softwareRevision(PPDeviceModel deviceModel) {
+                Logger.d("版本号：" + deviceModel.getFirmwareVersion());
             }
 
             @Override
-            public void batteryPower(int batteryPower) {
-                Logger.d("电量：" + batteryPower);
+            public void batteryPower(PPDeviceModel deviceModel) {
+                Logger.d("电量：" + deviceModel.getBatteryPower());
             }
         });
 
@@ -265,7 +265,9 @@ public class BindingDeviceActivity extends Activity {
                 Logger.d(getString(R.string.device_connecting));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
                 Logger.d(getString(R.string.device_disconnected));
-            } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateStop) {
+            } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
+                Logger.d(getString(R.string.stop_scanning));
+            } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
                 Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                 Logger.d(getString(R.string.scanning));
