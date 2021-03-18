@@ -21,6 +21,7 @@ import com.example.pengsiyuan.ppbluetoothle.util.DataUtil;
 import com.example.pengsiyuan.ppbluetoothle.util.PPUtil;
 import com.peng.ppscale.business.ble.PPScale;
 import com.peng.ppscale.business.device.PPUnitType;
+import com.peng.ppscale.util.ByteUtil;
 import com.peng.ppscale.util.UnitUtil;
 import com.peng.ppscale.vo.PPBodyFatModel;
 import com.peng.ppscale.vo.PPUserModel;
@@ -172,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String number = s.toString();
                 if (number.length() > 0) {
-                    int unit = Integer.parseInt(number);
-                    MainActivity.this.unit = UnitUtil.getUnitType(unit);
+                    int unit = ByteUtil.hexToTen(number);
+                    MainActivity.this.unit = UnitUtil.getUnitType(unit, "");
                 }
             }
         });
