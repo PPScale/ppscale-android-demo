@@ -8,7 +8,7 @@ static def releaseTime() {
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.lefu.ppscalel.ble"
+        applicationId "com.lefu.ppscale.wifi"
         minSdkVersion 18
         targetSdkVersion 29
         versionCode LIB_VERSION_CODE as int
@@ -29,7 +29,7 @@ android {
     greendao {
         schemaVersion 1 //数据库版本
         targetGenDir 'src/main/java' //指定生成代码的目录
-        daoPackage 'com.lefu.ppscale.ble.dao'//生成代码到具体包下
+        daoPackage 'com.lefu.ppscale.wifi.dao'//生成代码到具体包下
     }
 
     android.applicationVariants.all { variant ->
@@ -47,8 +47,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'org.greenrobot:greendao:3.2.2'
-//    implementation project(':ppscale')
+    implementation project(':ppscale')
 //    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-    implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.10'
+//    implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.10'
 
 }
