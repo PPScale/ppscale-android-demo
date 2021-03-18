@@ -2,7 +2,7 @@ package com.lefu.ppscale.wifi.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lefu.ppscale.wifi.R;
 import com.peng.ppscale.business.ble.BleOptions;

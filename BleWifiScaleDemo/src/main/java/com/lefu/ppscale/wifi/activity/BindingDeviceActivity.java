@@ -3,11 +3,17 @@ package com.lefu.ppscale.wifi.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lefu.healthu.business.mine.binddevice.BindDeviceWiFiLockSelectConfigNetDialog;
 import com.lefu.ppscale.wifi.DBManager;
 import com.lefu.ppscale.wifi.R;
 
@@ -19,6 +25,7 @@ import com.peng.ppscale.business.ble.PPScale;
 import com.peng.ppscale.business.ble.listener.PPBleStateInterface;
 import com.peng.ppscale.business.ble.listener.PPDeviceInfoInterface;
 import com.peng.ppscale.business.ble.listener.PPHistoryDataInterface;
+import com.peng.ppscale.business.device.PPDeviceType;
 import com.peng.ppscale.business.device.PPUnitType;
 import com.peng.ppscale.business.ble.listener.PPLockDataInterface;
 import com.peng.ppscale.business.ble.listener.PPProcessDateInterface;
@@ -31,13 +38,19 @@ import com.peng.ppscale.vo.PPBodyFatModel;
 import com.peng.ppscale.vo.PPDeviceModel;
 import com.peng.ppscale.vo.PPUserModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BindingDeviceActivity extends Activity {
+public class BindingDeviceActivity extends FragmentActivity {
+
+    private static final String BUNDLE_FRAGMENTS_KEY = BindDeviceWiFiLockSelectConfigNetDialog.class.getSimpleName();
 
     TextView weightTextView;
     PPScale ppScale;
+
+    private BindDeviceWiFiLockSelectConfigNetDialog configWifiDialog;
 
     /**
      * PPUnitKG = 0,
@@ -59,6 +72,9 @@ public class BindingDeviceActivity extends Activity {
     private int searchType;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
+
+    private boolean isStepOne;
+    private PPBodyFatModel mbodyDataModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,11 +155,19 @@ public class BindingDeviceActivity extends Activity {
                     } else {
                         Logger.d("monitorLockData  bodyFatModel heartRate = " + bodyFatModel.getPpHeartRate());
                     }
+                    mbodyDataModel = bodyFatModel;
                     String weightStr = PPUtil.getWeight(bodyFatModel.getUnit(), bodyFatModel.getPpWeightKg());
                     if (weightTextView != null) {
                         weightTextView.setText(weightStr);
+                    }
+                    if (PPDeviceType.Scale.isConfigWifiScale(deviceModel.getDeviceName())) {
+                        //蓝牙WiFi秤
+                        showWiFiConfigDialog(weightStr, deviceModel);
+                    } else {
+                        //普通蓝牙秤
                         showDialog(deviceModel, bodyFatModel);
                     }
+
                 } else {
                     Logger.d("正在测量心率");
                 }
@@ -219,7 +243,6 @@ public class BindingDeviceActivity extends Activity {
                     .build();
             ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
         }
-
     }
 
     private void showDialog(final PPDeviceModel deviceModel, final PPBodyFatModel bodyDataModel) {
@@ -294,16 +317,84 @@ public class BindingDeviceActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ppScale != null) {
-            ppScale.stopSearch();
-            ppScale.disConnect();
-        }
+        disConnect();
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
             alertDialog = null;
             builder = null;
         }
     }
+
+    private void showWiFiConfigDialog(String weightStr, final PPDeviceModel deviceModel) {
+        if (configWifiDialog == null) {
+            configWifiDialog = new BindDeviceWiFiLockSelectConfigNetDialog();
+        }
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putString("content", weightStr);
+            configWifiDialog.setArguments(bundle);
+
+            if (!configWifiDialog.isAdded() && !configWifiDialog.isVisible() && !configWifiDialog.isRemoving()) {
+                configWifiDialog.show(getSupportFragmentManager().beginTransaction(), BUNDLE_FRAGMENTS_KEY);
+                configWifiDialog.setOnSelectListener(new BindDeviceWiFiLockSelectConfigNetDialog.OnSelectListener() {
+
+                    @Override
+                    public void onGoToConfigWiFi(@NotNull DialogFragment dialog) {
+                        dialog.dismiss();
+                        isStepOne = false;
+                        saveDeviceAndBodyFat(deviceModel, mbodyDataModel);
+//                        UnitMatchTypeHelper.setDeviceMac(deviceModel.getDeviceMac());
+
+                        disConnect();
+
+                        if (PPScale.isBluetoothOpened()) {
+                            Intent intent = new Intent(BindingDeviceActivity.this, BleConfigWifiActivity.class);
+                            intent.putExtra("address", deviceModel.getDeviceMac());
+                            startActivity(intent);
+                        } else {
+                            PPScale.openBluetooth();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCorfirm(@NotNull DialogFragment dialog) {
+                        saveDeviceAndBodyFat(deviceModel, mbodyDataModel);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancle(@NotNull DialogFragment dialog) {
+                        startSearchDevice();
+                        dialog.dismiss();
+                    }
+
+                });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startSearchDevice() {
+        if (ppScale != null) {
+            ppScale.disConnect();
+            ppScale.startSearchBluetoothScaleWithMacAddressList(false);
+        }
+    }
+
+    private void saveDeviceAndBodyFat(PPDeviceModel deviceModel, PPBodyFatModel lfPeopleGeneral) {
+
+    }
+
+    private void disConnect() {
+        if (ppScale != null) {
+            ppScale.stopSearch();
+            ppScale.disConnect();
+        }
+    }
+
 }
 
 

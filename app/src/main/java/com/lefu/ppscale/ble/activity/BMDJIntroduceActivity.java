@@ -2,7 +2,7 @@ package com.lefu.ppscale.ble.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lefu.ppscale.ble.R;
 import com.peng.ppscale.business.ble.BleOptions;

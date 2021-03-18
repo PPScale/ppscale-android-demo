@@ -40,4 +40,15 @@
 	<string name="system_bluetooth_disconnect">Disconnect the Bluetooth system</string>
 	<string name="system_blutooth_on">Open the Bluetooth system</string>
 	<string name="system_bluetooth_abnormal">Bluetooth system abnormalities</string>
+
+    <string name="warn_title">Cozy Hint</string>
+    <string name="config_wifi">Configure WiFi</string>
+    <string name="lock_data_received">Lock data has been received</string>
+    <string name="later_to_say_again">Talk later</string>
+    <string name="not_my_data">Not my data</string>
+
+    <string name="config_wifi_detail">You can choose to configure the WIFI of the device now or later in the device list</string>
+    <string name="no_longer_prompt">Do not remind again</string>
+    <string name="go_to_config_wifi">The device you are currently using is a Bluetooth WIFI scale, but you have not yet configured the network, do you need to configure it?</string>
+
 </resources>

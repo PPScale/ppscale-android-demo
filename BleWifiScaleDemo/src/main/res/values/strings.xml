@@ -40,4 +40,15 @@
     <string name="system_bluetooth_disconnect">系统蓝牙断开</string>
     <string name="system_blutooth_on">系统蓝牙打开</string>
     <string name="system_bluetooth_abnormal">系统蓝牙异常</string>
+
+    <string name="warn_title">温馨提示</string>
+    <string name="lock_data_received">已接收到锁定数据</string>
+    <string name="config_wifi">配置WiFi</string>
+    <string name="later_to_say_again">稍后再说</string>
+    <string name="not_my_data">不是我的数据</string>
+
+    <string name="no_longer_prompt">不再提示</string>
+    <string name="config_wifi_detail">您可以选择现在对设备进行WIFI配置，也可以稍后在设备列表中进行</string>
+    <string name="go_to_config_wifi">您当前使用的设备为蓝牙WIFI秤，但您尚未配网，是否需要进行配置？</string>
+
 </resources>
