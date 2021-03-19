@@ -13,13 +13,20 @@ public class DeviceModel {
     private String deviceMac;
     private String deviceName;
     private int deviceType;
-    @Generated(hash = 60055158)
-    public DeviceModel(Long id, String deviceMac, String deviceName,
-            int deviceType) {
+    private String sn;
+    private String ssid;
+    @Generated(hash = 1805901528)
+    public DeviceModel(Long id, String deviceMac, String deviceName, int deviceType,
+            String sn, String ssid) {
         this.id = id;
         this.deviceMac = deviceMac;
         this.deviceName = deviceName;
         this.deviceType = deviceType;
+        this.sn = sn;
+        this.ssid = ssid;
+    }
+    @Generated(hash = 210163102)
+    public DeviceModel() {
     }
 
     public DeviceModel(String deviceMac, String deviceName, int deviceType) {
@@ -28,9 +35,6 @@ public class DeviceModel {
         this.deviceType = deviceType;
     }
 
-    @Generated(hash = 210163102)
-    public DeviceModel() {
-    }
     public Long getId() {
         return this.id;
     }
@@ -55,6 +59,18 @@ public class DeviceModel {
     public void setDeviceType(int deviceType) {
         this.deviceType = deviceType;
     }
+    public String getSn() {
+        return this.sn;
+    }
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
+    public String getSsid() {
+        return this.ssid;
+    }
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
+    }
 
-
+    
 }

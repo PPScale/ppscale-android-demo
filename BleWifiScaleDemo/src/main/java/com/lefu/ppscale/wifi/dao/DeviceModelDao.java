@@ -28,6 +28,8 @@ public class DeviceModelDao extends AbstractDao<DeviceModel, Long> {
         public final static Property DeviceMac = new Property(1, String.class, "deviceMac", false, "DEVICE_MAC");
         public final static Property DeviceName = new Property(2, String.class, "deviceName", false, "DEVICE_NAME");
         public final static Property DeviceType = new Property(3, int.class, "deviceType", false, "DEVICE_TYPE");
+        public final static Property Sn = new Property(4, String.class, "sn", false, "SN");
+        public final static Property Ssid = new Property(5, String.class, "ssid", false, "SSID");
     }
 
 
@@ -46,7 +48,9 @@ public class DeviceModelDao extends AbstractDao<DeviceModel, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"DEVICE_MAC\" TEXT UNIQUE ," + // 1: deviceMac
                 "\"DEVICE_NAME\" TEXT," + // 2: deviceName
-                "\"DEVICE_TYPE\" INTEGER NOT NULL );"); // 3: deviceType
+                "\"DEVICE_TYPE\" INTEGER NOT NULL ," + // 3: deviceType
+                "\"SN\" TEXT," + // 4: sn
+                "\"SSID\" TEXT);"); // 5: ssid
     }
 
     /** Drops the underlying database table. */
@@ -74,6 +78,16 @@ public class DeviceModelDao extends AbstractDao<DeviceModel, Long> {
             stmt.bindString(3, deviceName);
         }
         stmt.bindLong(4, entity.getDeviceType());
+ 
+        String sn = entity.getSn();
+        if (sn != null) {
+            stmt.bindString(5, sn);
+        }
+ 
+        String ssid = entity.getSsid();
+        if (ssid != null) {
+            stmt.bindString(6, ssid);
+        }
     }
 
     @Override
@@ -95,6 +109,16 @@ public class DeviceModelDao extends AbstractDao<DeviceModel, Long> {
             stmt.bindString(3, deviceName);
         }
         stmt.bindLong(4, entity.getDeviceType());
+ 
+        String sn = entity.getSn();
+        if (sn != null) {
+            stmt.bindString(5, sn);
+        }
+ 
+        String ssid = entity.getSsid();
+        if (ssid != null) {
+            stmt.bindString(6, ssid);
+        }
     }
 
     @Override
@@ -108,7 +132,9 @@ public class DeviceModelDao extends AbstractDao<DeviceModel, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // deviceMac
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // deviceName
-            cursor.getInt(offset + 3) // deviceType
+            cursor.getInt(offset + 3), // deviceType
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // sn
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // ssid
         );
         return entity;
     }
@@ -119,6 +145,8 @@ public class DeviceModelDao extends AbstractDao<DeviceModel, Long> {
         entity.setDeviceMac(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setDeviceName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setDeviceType(cursor.getInt(offset + 3));
+        entity.setSn(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setSsid(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     @Override

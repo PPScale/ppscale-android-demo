@@ -34,6 +34,10 @@ public class DBManager {
         deviceModelDao.insertOrReplace(deviceModel);
     }
 
+    public void updateDevice(DeviceModel deviceModel) {
+        deviceModelDao.update(deviceModel);
+    }
+
     public void deleteDevice(DeviceModel model) {
         try {
             sqLiteDatabase.delete(DeviceModelDao.TABLENAME, DeviceModelDao.Properties.DeviceMac.columnName + "=?", new String[]{model.getDeviceMac()});
@@ -45,6 +49,12 @@ public class DBManager {
     public List<DeviceModel> getDeviceList() {
         List<DeviceModel> deviceModelList = deviceModelDao.loadAll();
         return deviceModelList;
+    }
+
+
+    public DeviceModel getDevice(String mac) {
+        DeviceModel deviceModel = deviceModelDao.queryBuilder().where(DeviceModelDao.Properties.DeviceMac.eq(mac)).unique();
+        return deviceModel;
     }
 
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.lefu.ppscale.wifi.dao.DaoMaster;
 import com.lefu.ppscale.wifi.dao.DaoSession;
+import com.peng.ppscale.BleManager.Manager.MyApplication;
 import com.peng.ppscale.business.ble.PPScale;
 
 public class PPApplication extends Application {
@@ -13,11 +14,15 @@ public class PPApplication extends Application {
     private static PPApplication mApp;
     private static DaoSession mDaoSession;
     private static SQLiteDatabase sqLiteDatabase;
+
+    private static PPApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
         mApp = this;
         initGreenDao();
+        instance = this;
 
         PPScale.setDebug(true);
     }
@@ -36,6 +41,10 @@ public class PPApplication extends Application {
 
     public static SQLiteDatabase getSqLiteDatabase() {
         return sqLiteDatabase;
+    }
+
+    public static Application getInstance() {
+        return instance;
     }
 }
 

@@ -1,4 +1,4 @@
-package com.lefu.ppscale.wifi.activity;
+package com.lefu.ppscale.wifi;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -6,10 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +20,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-import com.lefu.ppscale.wifi.R;
+import com.lefu.ppscale.wifi.activity.BindingDeviceActivity;
+import com.lefu.ppscale.wifi.activity.BodyDataDetailActivity;
+import com.lefu.ppscale.wifi.activity.DeviceListActivity;
+import com.lefu.ppscale.wifi.data.WifiDataListActivity;
 import com.lefu.ppscale.wifi.util.DataUtil;
 import com.lefu.ppscale.wifi.util.PPUtil;
 import com.peng.ppscale.business.ble.PPScale;
@@ -27,6 +33,8 @@ import com.peng.ppscale.util.UnitUtil;
 import com.peng.ppscale.vo.PPBodyFatModel;
 import com.peng.ppscale.vo.PPUserModel;
 import com.peng.ppscale.vo.PPUserSex;
+
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         weightTextView = findViewById(R.id.weightTextView);
         requestPower();
 
+        initData();
+
  /*       Button mBtnConfigWifi = findViewById(R.id.wificonfigBtn);
         mBtnConfigWifi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 */
+
+        Button dataListBtn = findViewById(R.id.dataListBtn);
+        dataListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WifiDataListActivity.class);
+                startActivity(intent);
+            }
+        });
         Button mBtnBindingDeice = findViewById(R.id.bindingDeviceBtn);
         mBtnBindingDeice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,6 +253,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void initData() {
+        String uid = SettingManager.get().getUid();
+        if (TextUtils.isEmpty(uid)) {
+            SettingManager.get().setUid(UUID.randomUUID().toString());
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -287,33 +313,6 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1);
             }
         }
-    }
-
-    private void showDialog() {
-        String content = getString(R.string.please_select_function);
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage(content);
-        builder.setPositiveButton(R.string.bmdj, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(MainActivity.this, BMDJConnectActivity.class);
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton(R.string.measure_weight, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (PPScale.isBluetoothOpened()) {
-                    Intent intent = new Intent(MainActivity.this, BindingDeviceActivity.class);
-                    intent.putExtra(BindingDeviceActivity.UNIT_TYPE, unit.getType());
-                    intent.putExtra(BindingDeviceActivity.SEARCH_TYPE, 1);
-                    startActivity(intent);
-                } else {
-                    PPScale.openBluetooth();
-                }
-            }
-        });
-        builder.show();
     }
 
 

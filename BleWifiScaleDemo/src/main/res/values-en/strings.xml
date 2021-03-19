@@ -50,5 +50,14 @@
     <string name="config_wifi_detail">You can choose to configure the WIFI of the device now or later in the device list</string>
     <string name="no_longer_prompt">Do not remind again</string>
     <string name="go_to_config_wifi">The device you are currently using is a Bluetooth WIFI scale, but you have not yet configured the network, do you need to configure it?</string>
+    <string name="login_back">Back</string>
+    <string name="wifi_config_title">Select the Wi-Fi for devices to work with</string>
+    <string name="wifi_config_5g_hint">Your 5G network is not currently supported, please set up Wi-Fi and switch to another network</string>
+
+    <string name="wifi_config_key_hint">Enter Wi-Fi password</string>
+    <string name="wifi_config_other">Change other Wi-Fi</string>
+    <string name="select_device_type_next">Next</string>
+    <string name="wifi_config_disconnected">The network is disconnected</string>
+
 
 </resources>

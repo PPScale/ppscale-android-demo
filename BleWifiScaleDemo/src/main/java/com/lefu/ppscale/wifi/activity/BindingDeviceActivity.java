@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
@@ -167,7 +168,6 @@ public class BindingDeviceActivity extends FragmentActivity {
                         //普通蓝牙秤
                         showDialog(deviceModel, bodyFatModel);
                     }
-
                 } else {
                     Logger.d("正在测量心率");
                 }
@@ -275,11 +275,6 @@ public class BindingDeviceActivity extends FragmentActivity {
         }
     }
 
-    private void dismissSelf() {
-        ppScale.stopSearch();
-        finish();
-    }
-
     PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
         @Override
         public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
@@ -345,12 +340,11 @@ public class BindingDeviceActivity extends FragmentActivity {
                         saveDeviceAndBodyFat(deviceModel, mbodyDataModel);
 //                        UnitMatchTypeHelper.setDeviceMac(deviceModel.getDeviceMac());
 
-                        disConnect();
-
                         if (PPScale.isBluetoothOpened()) {
                             Intent intent = new Intent(BindingDeviceActivity.this, BleConfigWifiActivity.class);
                             intent.putExtra("address", deviceModel.getDeviceMac());
                             startActivity(intent);
+                            finish();
                         } else {
                             PPScale.openBluetooth();
                         }
@@ -361,6 +355,7 @@ public class BindingDeviceActivity extends FragmentActivity {
                     public void onCorfirm(@NotNull DialogFragment dialog) {
                         saveDeviceAndBodyFat(deviceModel, mbodyDataModel);
                         dialog.dismiss();
+                        finish();
                     }
 
                     @Override
@@ -384,8 +379,11 @@ public class BindingDeviceActivity extends FragmentActivity {
         }
     }
 
-    private void saveDeviceAndBodyFat(PPDeviceModel deviceModel, PPBodyFatModel lfPeopleGeneral) {
+    private void saveDeviceAndBodyFat(PPDeviceModel deviceModel, PPBodyFatModel bodyDataModel) {
+        DBManager.manager().insertDevice(deviceModel);
 
+        DataUtil.util().setBodyDataModel(bodyDataModel);
+        disConnect();
     }
 
     private void disConnect() {
@@ -393,6 +391,11 @@ public class BindingDeviceActivity extends FragmentActivity {
             ppScale.stopSearch();
             ppScale.disConnect();
         }
+    }
+
+    private void dismissSelf() {
+        ppScale.stopSearch();
+        finish();
     }
 
 }
