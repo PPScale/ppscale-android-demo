@@ -1,3 +1,4 @@
 include ':app'
+include ':BleWifiScaleDemo'
 include ':bluetoothkit'
 include ':ppscale'
