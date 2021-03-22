@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -158,7 +159,6 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         Toast.makeText(BleConfigWifiActivity.this, "配网失败", Toast.LENGTH_SHORT).show();
-                        stopPPScale();
                     }
 
                     @Override
@@ -173,8 +173,8 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                             }
                             finish();
                         } else {
-                            Toast.makeText(BleConfigWifiActivity.this, "配网失败", Toast.LENGTH_SHORT).show();
-                            stopPPScale();
+                            String content = TextUtils.isEmpty(response.getMsg()) ? "配网失败" : response.getMsg();
+                            Toast.makeText(BleConfigWifiActivity.this, content, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -285,9 +285,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ppScale.stopWifiConfig();
-        ppScale.disConnect();
-        ppScale.stopSearch();
+        stopPPScale();
         stopSplashHint();
     }
 

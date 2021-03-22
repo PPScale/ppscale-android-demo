@@ -4,6 +4,12 @@
 
 注意：ppscale是蓝牙连接逻辑以及数据解析逻辑。另一个是Android层蓝牙封装库。集成SDK的开发者无需关心里面的逻辑实现。在开发者集成的时候，请采用从maven下载的库的集成方式集成。建议开发者查看README.md文档，完成集成。
 
+## 一、[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md) 
+[Bluetooth WIFI Scale example](BleWifiScaleDemo/README_EN.md) 
+        
+## 二、蓝牙体脂秤示例
+###### 2.1 蓝牙配网
+
 ##  Ⅰ . 集成方式 -两种方式
 
 #####  gradle自动导入方式
@@ -23,7 +29,7 @@
        
         dependencies {
             、、、
-                implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.4'     
+                implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.10'     
         }
         
         
@@ -267,6 +273,9 @@
 最后你需要在离开页面的之前调用stopSearch方法。
 具体的实现请参考Demo中BindingDeviceActivity和ScaleWeightActivity中的代码。
 
+
+
+
 ###### 1.8 PPBodyFatModel 实例化说明
 如果是自行解析蓝牙协议数据的，需要实例化该类，来获取对应的其他身体数据，
 
@@ -339,7 +348,7 @@
    
   注意：在使用时拿到对象，请调用对应的get方法来获取对应的值
   
-###### 2.0  PPBodyEnum 参数说明 
+###### 1.10  PPBodyEnum 参数说明 
   
   1.错误类型 PPBodyEnum.PPBodyfatErrorType
   
@@ -372,59 +381,66 @@
       PPBodyAssessment5(4),          //!< 非常好
       PPBodyAssessmentError(-1);          //!< 参数错误
   
+## IV .闭目单脚模式相关方法
 
-## IV .ppscalelib在WIFI设备的使用
-
-###### 2.1 蓝牙配网
-
-具体可参考：{@link BleConfigWifiActivity}
-        
-       
+使用PPScale的实例对象调用扫描附近设备的方法来搜索附近的闭目单脚蓝牙秤并进行连接。
+```
+/// 连接闭目单脚设备
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
-        //监听配网结果 setConfigWifiInterface()
-        protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
-            
-            /**
-             * wifi设备配网成功并获取到SN
-             *
-             * @param sn 设备识别码
-             */
-             @Override
-             public void monitorConfigState(String sn) {
-                 //拿到sn 处理业务逻辑
-                 Logger.e("xxxxxxxxxxxx-" + sn);
-             }
-         });
+                protocalFilter.setBmdjConnectInterface(new PPBMDJConnectInterface() {
+                    @Override
+                    public void monitorBMDJConnectSuccess() {
+                        isAutoPush = true;
+                        Intent intent = new Intent(BMDJConnectActivity.this, BMDJIntroduceActivity.class);
+                        startActivity(intent);
+                    }
         
-        ppScale = new PPScale.Builder(this)
-                   .setProtocalFilterImpl(protocalFilter)
-                   .setBleOptions(getBleOptions())
-                   .setBleStateInterface(bleStateInterface)
-                   .build();
-        ppScale.startSearchBluetoothScaleWithMacAddressList();
+                    @Override
+                    public void monitorBMDJConnectFail() {
+        
+                    }
+                });{
+        
+                }
+                BleOptions bleOptions = new BleOptions.Builder()
+                        .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_BMDJ)
+                        .setDeviceType(PPDeviceType.Contants.FAT_AND_BMDJ)
+                        .build();
+        
+                ppScale = new PPScale.Builder(getApplicationContext())
+                        .setDeviceList(addressList)
+                        .setBleOptions(bleOptions)
+                        .setProtocalFilterImpl(protocalFilter)
+                        .build();
+        
+                ppScale.enterBMDJModel();
+```
 
-WIFI参数配置
+退出闭目单脚模式并停止扫描断开连接
+```
+/// 停止扫描切断开闭目单脚的设备
+-  ppScale.exitBMDJModel();
+```
+监听闭目单脚状态
+```
+(interface)PPBMDJStatesInterface
+```
 
-        /**
-            * 参数配置 绑定时请确保WIFI是2.4G，并且账号密码正确
-            *
-            * @param password     WIFI密码
-            * @param featuresFlag 具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI}                      
-            * @parm ssid          WIFI账号  不可为空
-            * @return
-            */
-           private BleOptions getBleOptions() {
-               return new BleOptions.Builder()
-                       .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
-                       .setPassword("12345678")
-                       .setSsid("IT05-2.4G")
-                       .build();
-           }
+发送指令使设备进入闭目单脚模式
+```
+/// 闭目单脚设备进入准备状态
+- (void)enterBMDJModel()
+```
+在回调函数中返回闭目单脚站立的时间
+```
+/// 设备退出闭目单脚状态
+- (interface)PPBMDJDataInterface;
+```
 
-蓝牙状态监听，请参考本文档   1.3  PPBleStateInterface       
+--- 
 
 
-## V .版本更新说明
+## VI .版本更新说明
    
     ----0.0.1-----
     1、增加maven配置  2、增加兼容BodyFat Scale1

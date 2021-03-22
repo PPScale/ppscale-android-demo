@@ -3,7 +3,10 @@ package com.lefu.ppscale.wifi.util;
 import com.peng.ppscale.business.device.PPUnitType;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PPUtil {
 
@@ -77,6 +80,12 @@ public class PPUtil {
         } else {
             return htWeightKg + "kg";
         }
+    }
+
+    /*** 日期long格式化为yyyy/MM/dd HH:mm ***/
+    public static String formatDate2(long date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(new Date(date));
     }
 
 

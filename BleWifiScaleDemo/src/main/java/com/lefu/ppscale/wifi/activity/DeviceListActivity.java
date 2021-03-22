@@ -7,31 +7,42 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.lefu.ppscale.wifi.DBManager;
 import com.lefu.ppscale.wifi.R;
+import com.lefu.ppscale.wifi.SettingManager;
 import com.lefu.ppscale.wifi.adapter.DeviceListAdapter;
 import com.lefu.ppscale.wifi.model.DeviceModel;
-import com.peng.ppscale.business.device.DeviceManager;
+import com.lefu.ppscale.wifi.net.okhttp.DataTask;
+import com.lefu.ppscale.wifi.net.okhttp.NetUtil;
+import com.lefu.ppscale.wifi.net.okhttp.RetCallBack;
+import com.lefu.ppscale.wifi.net.okhttp.vo.SaveWifiGroupBean;
 import com.peng.ppscale.business.device.PPDeviceType;
-
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
 
 public class DeviceListActivity extends AppCompatActivity {
 
     private DeviceListAdapter adapter;
+    private List<DeviceModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
-        final List<DeviceModel> list = DBManager.manager().getDeviceList();
+
+        list = DBManager.manager().getDeviceList();
         adapter = new DeviceListAdapter(DeviceListActivity.this, R.layout.list_view_device, list);
         ListView listView = (ListView) findViewById(R.id.list_View);
+
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -39,19 +50,24 @@ public class DeviceListActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(DeviceListActivity.this);
                 builder.setMessage("确定删除?");
                 builder.setTitle("提示");
-
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DBManager.manager().deleteDevice(list.get(position));
-                        list.remove(position);
-                        adapter.notifyDataSetChanged();
+                        if (list != null) {
+                            DeviceModel deviceModel = list.get(position);
+                            DBManager.manager().deleteDevice(deviceModel);
+                            list.remove(position);
+                            adapter.notifyDataSetChanged();
+
+                            clearDevice(deviceModel);
+                        }
+
                     }
                 });
 
                 builder.setNegativeButton("取消", null);
                 builder.show();
-                return false;
+                return true;
             }
 
         });
@@ -69,5 +85,50 @@ public class DeviceListActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    public void clearDevice(DeviceModel deviceModel) {
+
+        if (deviceModel != null) {
+            String sn = deviceModel.getSn();
+            if (!TextUtils.isEmpty(sn)) {
+                Map<String, String> map = new HashMap<>();
+                map.put("sn", sn);
+                map.put("uid", SettingManager.get().getUid());
+
+                DataTask.get(NetUtil.CLEAR_DEVICE_DATA, map, new RetCallBack<SaveWifiGroupBean>(SaveWifiGroupBean.class) {
+
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Toast.makeText(DeviceListActivity.this, "清除失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(SaveWifiGroupBean response, int id) {
+                        if (response.isStatus()) {
+                            Toast.makeText(DeviceListActivity.this, "清除成功", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            String content = TextUtils.isEmpty(response.getMsg()) ? "清除失败" : response.getMsg();
+                            Toast.makeText(DeviceListActivity.this, content, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        list = DBManager.manager().getDeviceList();
+        if (adapter != null) {
+            adapter.clear();
+            adapter.addAll(list);
+//            adapter.notifyDataSetChanged();
+        }
     }
 }

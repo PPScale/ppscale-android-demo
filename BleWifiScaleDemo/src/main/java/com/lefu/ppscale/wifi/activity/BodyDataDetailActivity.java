@@ -8,8 +8,12 @@ import android.widget.TextView;
 
 import com.lefu.ppscale.wifi.R;
 import com.lefu.ppscale.wifi.data.BodyFataDataModel;
+import com.lefu.ppscale.wifi.data.WifiDataBean;
 import com.lefu.ppscale.wifi.util.DataUtil;
+import com.peng.ppscale.business.device.DeviceManager;
+import com.peng.ppscale.business.device.PPUnitType;
 import com.peng.ppscale.vo.PPBodyFatModel;
+import com.peng.ppscale.vo.PPUserModel;
 
 import java.io.Serializable;
 
@@ -21,7 +25,13 @@ public class BodyDataDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_body_data_detail);
         TextView textView = findViewById(R.id.data_detail);
 
-        BodyFataDataModel bodyFataDataModel = (BodyFataDataModel) getIntent().getSerializableExtra("bodyFataDataModel");
+//        BodyFataDataModel bodyFataDataModel = (BodyFataDataModel) getIntent().getSerializableExtra("bodyFataDataModel");
+        WifiDataBean wifiDataBean = (WifiDataBean) getIntent().getSerializableExtra("wifiDataBean");
+
+        PPUserModel userModel = DataUtil.util().getUserModel();
+
+        BodyFataDataModel bodyFataDataModel = new BodyFataDataModel(wifiDataBean.getWeight(), wifiDataBean.getImpedance(), "",
+                userModel, DeviceManager.HEALTH_SCALE6, PPUnitType.Unit_KG);
 
         if (bodyFataDataModel != null) {
             textView.setText(bodyFataDataModel.toString());
