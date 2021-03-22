@@ -4,13 +4,14 @@
 
 注意：ppscale是蓝牙连接逻辑以及数据解析逻辑。另一个是Android层蓝牙封装库。集成SDK的开发者无需关心里面的逻辑实现。在开发者集成的时候，请采用从maven下载的库的集成方式集成。建议开发者查看README.md文档，完成集成。
 
-## 一、[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md) 
-[Bluetooth WIFI Scale example](BleWifiScaleDemo/README_EN.md) 
+## 一、 蓝牙wiFi相关的文档
+[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md) 
+[Bluetooth WIFI Scale example English](BleWifiScaleDemo/README_EN.md) 
         
 ## 二、蓝牙体脂秤示例
 ###### 2.1 蓝牙配网
 
-##  Ⅰ . 集成方式 -两种方式
+###  Ⅰ. 集成方式 -两种方式
 
 #####  gradle自动导入方式
     
@@ -33,7 +34,7 @@
         }
         
         
-## Ⅱ .使用说明
+### Ⅱ .使用说明
 
 * 由于需要蓝牙连接，Demo需要真机运行。
 
@@ -58,7 +59,7 @@
     4. 在“绑定设备”和“上秤称重”页面接收到外设返回的数据后，会自动停止扫描并断开与外设的连接，然后把数据通过回调的方式传回“主页信息”更新体重一栏，具体的数据可以去“ 数据详情”页查看。
     
        
-## Ⅲ .ppscalelib在蓝牙设备的使用
+### Ⅲ .ppscalelib在蓝牙设备的使用
     
 ###### 1.1 绑定或扫描指定蓝牙设备
 
@@ -381,7 +382,7 @@
       PPBodyAssessment5(4),          //!< 非常好
       PPBodyAssessmentError(-1);          //!< 参数错误
   
-## IV .闭目单脚模式相关方法
+### IV .闭目单脚模式相关方法
 
 使用PPScale的实例对象调用扫描附近设备的方法来搜索附近的闭目单脚蓝牙秤并进行连接。
 ```
@@ -440,7 +441,7 @@
 --- 
 
 
-## VI .版本更新说明
+### VI .版本更新说明
    
     ----0.0.1-----
     1、增加maven配置  2、增加兼容BodyFat Scale1
