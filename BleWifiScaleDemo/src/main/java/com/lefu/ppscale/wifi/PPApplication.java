@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.lefu.ppscale.wifi.dao.DaoMaster;
 import com.lefu.ppscale.wifi.dao.DaoSession;
-import com.peng.ppscale.BleManager.Manager.MyApplication;
 import com.peng.ppscale.business.ble.PPScale;
 
 public class PPApplication extends Application {
