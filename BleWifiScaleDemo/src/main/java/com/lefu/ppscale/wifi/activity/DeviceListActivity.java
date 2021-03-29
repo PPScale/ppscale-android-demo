@@ -17,12 +17,14 @@ import com.lefu.ppscale.wifi.DBManager;
 import com.lefu.ppscale.wifi.R;
 import com.lefu.ppscale.wifi.SettingManager;
 import com.lefu.ppscale.wifi.adapter.DeviceListAdapter;
+import com.lefu.ppscale.wifi.develop.DeveloperActivity;
 import com.lefu.ppscale.wifi.model.DeviceModel;
 import com.lefu.ppscale.wifi.net.okhttp.DataTask;
 import com.lefu.ppscale.wifi.net.okhttp.NetUtil;
 import com.lefu.ppscale.wifi.net.okhttp.RetCallBack;
 import com.lefu.ppscale.wifi.net.okhttp.vo.SaveWifiGroupBean;
 import com.peng.ppscale.business.device.PPDeviceType;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,17 @@ public class DeviceListActivity extends AppCompatActivity {
         list = DBManager.manager().getDeviceList();
         adapter = new DeviceListAdapter(DeviceListActivity.this, R.layout.list_view_device, list);
         ListView listView = (ListView) findViewById(R.id.list_View);
-
+        adapter.setOnClickInItemLisenter(new DeviceListAdapter.OnItemClickViewInsideListener() {
+            @Override
+            public void onItemClickViewInside(int position, View v) {
+                DeviceModel deviceModel = (DeviceModel) adapter.getItem(position);
+                if (PPDeviceType.Scale.isConfigWifiScale(deviceModel.getDeviceName())) {
+                    Intent intent = new Intent(DeviceListActivity.this, DeveloperActivity.class);
+                    intent.putExtra(DeveloperActivity.ADDRESS, deviceModel.getDeviceMac());
+                    startActivity(intent);
+                }
+            }
+        });
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -75,14 +87,25 @@ public class DeviceListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 DeviceModel deviceModel = (DeviceModel) adapter.getItem(position);
-                if (PPDeviceType.Scale.isConfigWifiScale(deviceModel.getDeviceName())) {
-                    Intent intent = new Intent(DeviceListActivity.this, BleConfigWifiActivity.class);
-                    intent.putExtra("address", deviceModel.getDeviceMac());
-                    startActivity(intent);
-
+                switch (view.getId()) {
+                    case R.id.tvSetting:
+                        if (PPDeviceType.Scale.isConfigWifiScale(deviceModel.getDeviceName())) {
+                            Intent intent = new Intent(DeviceListActivity.this, DeveloperActivity.class);
+                            intent.putExtra(DeveloperActivity.ADDRESS, deviceModel.getDeviceMac());
+                            startActivity(intent);
+                        }
+                        break;
+                    default:
+                        if (PPDeviceType.Scale.isConfigWifiScale(deviceModel.getDeviceName())) {
+                            Intent intent = new Intent(DeviceListActivity.this, BleConfigWifiActivity.class);
+                            intent.putExtra("address", deviceModel.getDeviceMac());
+                            startActivity(intent);
+                        }
+                        break;
                 }
+
+
             }
         });
     }

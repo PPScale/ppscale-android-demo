@@ -11,7 +11,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.lefu.ppscale.wifi"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode LIB_VERSION_CODE as int
         versionName LIB_VERSION
@@ -42,6 +42,11 @@ android {
             outputFileName = "PPScale_${variant.versionName}_${variant.name}_${releaseTime()}.apk"
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -67,6 +72,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.alibaba:fastjson:1.2.47'
 
+
+    //依赖注入
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
 
 }
