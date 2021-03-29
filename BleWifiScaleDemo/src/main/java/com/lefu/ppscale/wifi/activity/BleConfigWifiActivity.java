@@ -37,6 +37,8 @@ import com.peng.ppscale.business.state.PPBleWorkState;
 import com.peng.ppscale.util.Logger;
 import com.peng.ppscale.vo.PPDeviceModel;
 
+import org.w3c.dom.Text;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +66,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     private TextView tvOthers;
     private String address;
     private String ssid;
+    private TextView tvNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         if (tvHint != null) {
             tvHint.setVisibility(View.INVISIBLE);
         }
+        tvNext = findViewById(R.id.tvNext);
         etWifiName = findViewById(R.id.etWifiName);
         etWifiKey = findViewById(R.id.etWifiKey);
         if (etWifiName != null) {
@@ -119,6 +123,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                 }
             });
         }
+        tvNext.setEnabled(true);
     }
 
     /**
@@ -135,6 +140,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     }
 
     private void startNextStep() {
+        tvNext.setEnabled(false);
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
 
@@ -145,6 +151,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
              */
             @Override
             public void monitorConfigState(final String sn, PPDeviceModel deviceModel) {
+                tvNext.setEnabled(true);
                 //拿到sn 处理业务逻辑
                 Logger.e("xxxxxxxxxxxx-" + sn);
                 Logger.e("xxxxxxxxxxxx-deviceName = " + deviceModel.getDeviceName() + " mac = " + deviceModel.getDeviceMac());
