@@ -178,33 +178,45 @@ PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
 ```
 
 --- 
+### 5.0 Developer mode
+On the device list page, click Settings to enter the developer mode page.
+Developer mode is provided, you need to ensure that the scale is always on  
+```
+    1. Get the sn, ssid and password functions of the scale terminal
+    2. Modify the network IP address (IP+Host) of the scale terminal, for example:
+    3. Modifying the network DNS address (domain name) of the scale terminal is in conflict with modifying the IP. Only one of them can be set. It is recommended to set DNS
+    4. Clear the SSID, the scale will be restored to factory settings
+    5. Reconnect is used when the scale is disconnected from the Bluetooth of the mobile phone
+```
 
-### 5. Common problems of Bluetooth WiFi scales
+--- 
 
-#### 5.1 Why can only the 2.4G frequency be used in the configuration of network?
+### 6. Common problems of Bluetooth WiFi scales
+
+#### 6.1 Why can only the 2.4G frequency be used in the configuration of network?
 
 
 - It is caused by the hardware specifications. The WiFi chip we use supports only 2.4G frequency.
 
 
-#### 5.2 Can a mixed-mode router be used for network configuration?
+#### 6.2 Can a mixed-mode router be used for network configuration?
 
 - Yes, the mixed mode of 2.4G and 5G is actually a router signal that constantly switches between 2.4G and 5G. Since the switching frequency is very fast, both frequency bands can be used at the same time. The scale can perform network configuration when the 2.4G frequency band is found. (Provides a network configuration compatibility report, all routers are tested in the default mode)
 
-#### 5.3 When do the scale upload data via WiFi?
+#### 6.3 When do the scale upload data via WiFi?
 
 - After each measurement is done and data locked.
 
-#### 5.4 How is the historical data of the scale terminal generated?
+#### 6.4 How is the historical data of the scale terminal generated?
 
 - After the weight is locked, under the circumstances of Bluetooth is not connected and the server uploading is not successful (the upload failure and the network are not configured), the current lock data of this group of weight will be stored as a history and stored in the scale body (up to Save 100 groups, and use the first-in-first-out principle after exceeding).
 
-#### 5.5 How is the historical data of the scale transmitted?
+#### 6.5 How is the historical data of the scale transmitted?
 
 - Data uploading is divided into two situations: the first is through Bluetooth, the current scale is not connected to the router. If the App connects to the scale via Bluetooth and sends a command to obtain historical data, the scale will store the history The data is notified to the App via Bluetooth and will not be actively deleted after the transfer is completed. You need to wait for the App to issue a delete command, and all historical data will be erased. The second one is through WiFi, the current scale has been equipped with the network before, but the data cannot be uploaded in time for some reason, then after the next measurement of the locked data, it will try to connect to the matching router and upload this weight and all historical data.
 
 
-#### 5.6 What is the process of network configuration and data upload for App and Bluetooth WiFi scale?
+#### 6.6 What is the process of network configuration and data upload for App and Bluetooth WiFi scale?
 
 ```
 sequenceDiagram
@@ -223,7 +235,8 @@ Scale->>Server:Report weighing data（SN,Weight,impedance）
 Server->>App:Find the matching UID through SN, and send the weighing data (Weight, impedance)
 
 ```
-#### 5.7 What is the process of OTA?
+
+#### 6.7 What is the process of OTA?
 
  ```
 sequenceDiagram
