@@ -3,7 +3,6 @@ package com.lefu.ppscale.wifi;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.peng.ppscale.BleManager.Manager.MyApplication;
 import com.peng.ppscale.util.Logger;
 
 public class SettingManager {

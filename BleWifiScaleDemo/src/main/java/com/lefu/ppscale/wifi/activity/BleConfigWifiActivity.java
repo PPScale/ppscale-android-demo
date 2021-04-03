@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -35,6 +36,8 @@ import com.peng.ppscale.business.state.PPBleSwitchState;
 import com.peng.ppscale.business.state.PPBleWorkState;
 import com.peng.ppscale.util.Logger;
 import com.peng.ppscale.vo.PPDeviceModel;
+
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -63,6 +66,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     private TextView tvOthers;
     private String address;
     private String ssid;
+    private TextView tvNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         if (tvHint != null) {
             tvHint.setVisibility(View.INVISIBLE);
         }
+        tvNext = findViewById(R.id.tvNext);
         etWifiName = findViewById(R.id.etWifiName);
         etWifiKey = findViewById(R.id.etWifiKey);
         if (etWifiName != null) {
@@ -118,6 +123,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                 }
             });
         }
+        tvNext.setEnabled(true);
     }
 
     /**
@@ -134,6 +140,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     }
 
     private void startNextStep() {
+        tvNext.setEnabled(false);
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
 
@@ -144,6 +151,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
              */
             @Override
             public void monitorConfigState(final String sn, PPDeviceModel deviceModel) {
+                tvNext.setEnabled(true);
                 //拿到sn 处理业务逻辑
                 Logger.e("xxxxxxxxxxxx-" + sn);
                 Logger.e("xxxxxxxxxxxx-deviceName = " + deviceModel.getDeviceName() + " mac = " + deviceModel.getDeviceMac());
@@ -158,7 +166,6 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         Toast.makeText(BleConfigWifiActivity.this, "配网失败", Toast.LENGTH_SHORT).show();
-                        stopPPScale();
                     }
 
                     @Override
@@ -173,8 +180,8 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                             }
                             finish();
                         } else {
-                            Toast.makeText(BleConfigWifiActivity.this, "配网失败", Toast.LENGTH_SHORT).show();
-                            stopPPScale();
+                            String content = TextUtils.isEmpty(response.getMsg()) ? "配网失败" : response.getMsg();
+                            Toast.makeText(BleConfigWifiActivity.this, content, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -285,9 +292,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ppScale.stopWifiConfig();
-        ppScale.disConnect();
-        ppScale.stopSearch();
+        stopPPScale();
         stopSplashHint();
     }
 

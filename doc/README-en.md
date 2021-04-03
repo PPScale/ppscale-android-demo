@@ -2,7 +2,13 @@
 
 #  LEFU Bluetooth Scale SDK
 
-##  Ⅰ . Integration method - two methods
+## 一、[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md) 
+[Bluetooth WIFI Scale example](BleWifiScaleDemo/README_EN.md) 
+   
+   
+## 二、Bluetooth body fat scale example  
+
+###  Ⅰ . Integration method - two methods
 #####  gradle Automatic import method
 
 1、Add build.gradle in the project directory
@@ -17,10 +23,10 @@
     
     dependencies {
         、、、
-        implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.4'     
+        implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.10'     
     }
     
-## Ⅱ .Instruction of use
+### Ⅱ .Instruction of use
 
 * Due to the need the Bluetooth connection, Demo needs to run by a real machine.
 
@@ -44,7 +50,7 @@
 
     4、After receiving the data returned by the peripherals on the "Bind Device" and "Weighing on Scales" pages, it will automatically stop scanning and disconnect from the peripherals, and then send the data back to the "Homepage Information" update via callback For the weight column, you can check the the specific data on "Data Details".
 
-## Ⅲ .The use of ppscalelib
+### Ⅲ .The use of ppscalelib
 ######  1.1 Bind or scan specified devices
     
         //The difference between binding device and scanning device is  searchType  0 Binding device 1 Scanning specified device
@@ -275,14 +281,14 @@ Note: When you get the object when using it, please call the corresponding get m
       PPBodyGradeMuscular(2),         //!< Super heavy
       PPBodyGradeLackofexercise(3);   //!< Obese
 
-  3.肥胖等级 PPBodyEnum.PPBodyfatErrorType
+  3.Obesity grade: PPBodyEnum.PPBodyfatErrorType
   
       PPBodyGradeFatOne(0),             //!< Obesity Grade 1
       PPBodyGradeLFatTwo(1),            //!< Obesity Grade 2
       PPBodyGradeFatThree(2),           //!< Obesity Grade 3
       PPBodyGradeFatFour(-1);           //!< Parameter error
   
-  4.健康等级 PPBodyEnum.PPBodyfatErrorType
+  4.Health level: PPBodyEnum.PPBodyfatErrorType
   
       PPBodyAssessment1(0),             //!< Health risks
       PPBodyAssessment2(1),             //!< Sub-health
@@ -291,57 +297,69 @@ Note: When you get the object when using it, please call the corresponding get m
       PPBodyAssessment5(4),             //!< very good
       PPBodyAssessmentError(-1);        //!< Parameter error
 
-## IV .ppscalelib在WIFI设备的使用
-
-###### 2.0 蓝牙配网
-
-Specific reference：{@link BleConfigWifiActivity}
-
-        ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
-        //监听配网结果 setConfigWifiInterface()
-        protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
-            
-            /**
-             * wifi设备配网成功并获取到SN
-             *
-             * @param sn 设备识别码
-             */
-             @Override
-             public void monitorConfigState(String sn) {
-                 //拿到sn 处理业务逻辑
-                 Logger.e("xxxxxxxxxxxx-" + sn);
-             }
-         });
-        
-        ppScale = new PPScale.Builder(this)
-                   .setProtocalFilterImpl(protocalFilter)
-                   .setBleOptions(getBleOptions())
-                   .setBleStateInterface(bleStateInterface)
-                   .build();
-        ppScale.startSearchBluetoothScaleWithMacAddressList();
-
-WIFI parameter configuration
-
-        /**
-            * 参数配置 绑定时请确保WIFI是2.4G，并且账号密码正确
-            *
-            * @param password     WIFI密码
-            * @param featuresFlag 具备的能力，WIFI秤{@link BleOptions.ScaleFeatures#FEATURES_CONFIG_WIFI}                      
-            * @parm ssid          WIFI账号  不可为空
-            * @return
-            */
-           private BleOptions getBleOptions() {
-               return new BleOptions.Builder()
-                       .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
-                       .setPassword("12345678")
-                       .setSsid("IT05-2.4G")
-                       .build();
-           }
 
 Bluetooth status monitoring, please refer to this document:   1.3  PPBleStateInterface       
 
 
-## V .Version update instructions
+## IV .Related methods of closed-eye single-leg mode
+
+Use the PPScale instance object to call the method of scanning nearby devices to search for nearby closed-eye single-leg Bluetooth scales and connect.
+```
+/// Connect a closed-eye single-leg device
+        ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
+                protocalFilter.setBmdjConnectInterface(new PPBMDJConnectInterface() {
+                    @Override
+                    public void monitorBMDJConnectSuccess() {
+                        isAutoPush = true;
+                        Intent intent = new Intent(BMDJConnectActivity.this, BMDJIntroduceActivity.class);
+                        startActivity(intent);
+                    }
+        
+                    @Override
+                    public void monitorBMDJConnectFail() {
+        
+                    }
+                });{
+        
+                }
+                BleOptions bleOptions = new BleOptions.Builder()
+                        .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_BMDJ)
+                        .setDeviceType(PPDeviceType.Contants.FAT_AND_BMDJ)
+                        .build();
+        
+                ppScale = new PPScale.Builder(getApplicationContext())
+                        .setDeviceList(addressList)
+                        .setBleOptions(bleOptions)
+                        .setProtocalFilterImpl(protocalFilter)
+                        .build();
+        
+                ppScale.enterBMDJModel();
+```
+
+Exit closed-eye single-foot mode and stop scanning to disconnect
+```
+/// 停止扫描切断开闭目单脚的设备
+-  ppScale.exitBMDJModel();
+```
+Monitor the status of one foot with closed eyes
+```
+(interface)PPBMDJStatesInterface
+```
+
+Send instructions to enter the closed-eye single-leg mode
+```
+/// 闭目单脚设备进入准备状态
+- (void)enterBMDJModel()
+```
+Return the time of standing on one foot with closed eyes in the callback function
+```
+/// 设备退出闭目单脚状态
+- (interface)PPBMDJDataInterface;
+```
+
+--- 
+
+### V .Version update instructions
    
     ----0.0.1-----
     1、Add maven configuration  2、Increase compatibility 'BodyFat Scale1'

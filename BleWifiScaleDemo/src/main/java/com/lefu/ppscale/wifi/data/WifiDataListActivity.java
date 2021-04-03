@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSON;
 import com.lefu.ppscale.wifi.DBManager;
 import com.lefu.ppscale.wifi.MainActivity;
 import com.lefu.ppscale.wifi.R;
@@ -64,7 +65,7 @@ public class WifiDataListActivity extends AppCompatActivity {
 
                 builder.setNegativeButton("取消", null);
                 builder.show();
-                return false;
+                return true;
             }
 
         });
@@ -72,15 +73,13 @@ public class WifiDataListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                WifiDataVo.Data item = (WifiDataVo.Data) parent.getAdapter().getItem(position);
+                WifiDataVo.Data dataVo = (WifiDataVo.Data) parent.getAdapter().getItem(position);
 
-                PPUserModel userModel = DataUtil.util().getUserModel();
 
-                BodyFataDataModel bodyFataDataModel = new BodyFataDataModel(item.getWeight(), item.getImpedance(), "",
-                        userModel, DeviceManager.HEALTH_SCALE6, PPUnitType.Unit_KG);
+                WifiDataBean wifiDataBean = JSON.parseObject(dataVo.getWeightJson(), WifiDataBean.class);
 
                 Intent intent = new Intent(WifiDataListActivity.this, BodyDataDetailActivity.class);
-                intent.putExtra("bodyFataDataModel", bodyFataDataModel);
+                intent.putExtra("wifiDataBean", wifiDataBean);
                 startActivity(intent);
 
             }
@@ -103,11 +102,10 @@ public class WifiDataListActivity extends AppCompatActivity {
             public void onResponse(WifiDataVo response, int id) {
                 if (response.isStatus()) {
                     List<WifiDataVo.Data> data = response.getData();
-                    adapter.add(data == null ? new ArrayList<WifiDataVo.Data>() : data);
+                    adapter.addAll(data == null ? new ArrayList<WifiDataVo.Data>() : data);
                 }
             }
         });
-
 
     }
 

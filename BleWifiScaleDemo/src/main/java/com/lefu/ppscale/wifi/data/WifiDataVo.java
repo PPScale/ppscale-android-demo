@@ -5,13 +5,18 @@ import java.util.List;
 
 public class WifiDataVo implements Serializable {
 
-    int code;
 
-    String msg;
+    /**
+     * code : 200
+     * msg : success
+     * status : true
+     * data : [{"id":1373894800331337700,"uid":"679d8b6a-b18e-48cd-9f33-362f3ea9546a","snNum":"BW01LF1012600043","weightJson":"{"sn\":\"BW01LF1012600043\",\"type\":\"CF516\",\"mac\":\"88:4a:18:5f:f6:c5\",\"firmwareVersion\":\"1000.2.01025\",\"WifiVersion\":\"1000.2.01025\",\"charge\":\"0.45\",\"Total index\":\"1\",\"Current index\":\"1\",\"weight\":\"13.30\",\"impedance\":\"0\",\"data_type\":\"0\",\"rssi\":\"-50\",\"timestamp\":\"1616397011000\"}"},{"id":1373894801224724500,"uid":"679d8b6a-b18e-48cd-9f33-362f3ea9546a","snNum":"BW01LF1012600043","weightJson":"{\"sn\":\"BW01LF1012600043\",\"type\":\"CF516\",\"mac\":\"88:4a:18:5f:f6:c5\",\"firmwareVersion\":\"1000.2.01025\",\"WifiVersion\":\"1000.2.01025\",\"charge\":\"0.51\",\"Total index\":\"1\",\"Current index\":\"1\",\"weight\":\"13.10\",\"impedance\":\"0\",\"data_type\":\"0\",\"rssi\":\"-55\",\"timestamp\":\"1616393764000\"}"}]
+     */
 
-    boolean status;
-
-    List<Data> data;
+    private int code;
+    private String msg;
+    private boolean status;
+    private List<Data> data;
 
     public int getCode() {
         return code;
@@ -45,81 +50,25 @@ public class WifiDataVo implements Serializable {
         this.data = data;
     }
 
-    public class Data implements Serializable{
-        private String sn;
-        private String mac;
-        private double weight;
-        private double charge;
-        private int impedance;
-        private String timestamp;
-        private String email;
-        private String claimKey;
+    public static class Data implements Serializable{
+        /**
+         * id : 1373894800331337700
+         * uid : 679d8b6a-b18e-48cd-9f33-362f3ea9546a
+         * snNum : BW01LF1012600043
+         * weightJson : {"sn":"BW01LF1012600043","type":"CF516","mac":"88:4a:18:5f:f6:c5","firmwareVersion":"1000.2.01025","WifiVersion":"1000.2.01025","charge":"0.45","Total index":"1","Current index":"1","weight":"13.30","impedance":"0","data_type":"0","rssi":"-50","timestamp":"1616397011000"}
+         */
+
+        private long id;
         private String uid;
-        private int heartRate;
-        private String infoId;
+        private String snNum;
+        private String weightJson;
 
-        public String getSn() {
-            return sn;
+        public long getId() {
+            return id;
         }
 
-        public void setSn(String sn) {
-            this.sn = sn;
-        }
-
-        public String getMac() {
-            return mac;
-        }
-
-        public void setMac(String mac) {
-            this.mac = mac;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
-
-        public void setWeight(double weight) {
-            this.weight = weight;
-        }
-
-        public double getCharge() {
-            return charge;
-        }
-
-        public void setCharge(double charge) {
-            this.charge = charge;
-        }
-
-        public int getImpedance() {
-            return impedance;
-        }
-
-        public void setImpedance(int impedance) {
-            this.impedance = impedance;
-        }
-
-        public String getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getClaimKey() {
-            return claimKey;
-        }
-
-        public void setClaimKey(String claimKey) {
-            this.claimKey = claimKey;
+        public void setId(long id) {
+            this.id = id;
         }
 
         public String getUid() {
@@ -130,23 +79,20 @@ public class WifiDataVo implements Serializable {
             this.uid = uid;
         }
 
-        public int getHeartRate() {
-            return heartRate;
+        public String getSnNum() {
+            return snNum;
         }
 
-        public void setHeartRate(int heartRate) {
-            this.heartRate = heartRate;
+        public void setSnNum(String snNum) {
+            this.snNum = snNum;
         }
 
-        public String getInfoId() {
-            return infoId;
+        public String getWeightJson() {
+            return weightJson;
         }
 
-        public void setInfoId(String infoId) {
-            this.infoId = infoId;
+        public void setWeightJson(String weightJson) {
+            this.weightJson = weightJson;
         }
     }
-
-
-
 }

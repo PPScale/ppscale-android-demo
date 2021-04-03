@@ -10,7 +10,8 @@ public class NetUtil {
         if (!BuildConfig.DEBUG) {
             url = "https://api.lefuenergy.com";   // 线上正式服务器
         } else {
-            url = "http://192.168.8.197:6032/";   // 内网测试服务器
+//            url = "http://healthy.iboohee.com";   // 线上正式服务器
+            url = "http://192.168.8.197:6032";   // 内网测试服务器
         }
         return url;
     }
