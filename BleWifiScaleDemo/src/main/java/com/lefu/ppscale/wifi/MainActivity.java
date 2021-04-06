@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // 身高
+        // 身高 height
         EditText heightET = findViewById(R.id.editText3);
         heightET.setText(this.height + "");
         heightET.addTextChangedListener(new TextWatcher() {
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //年龄
+        //年龄  age
         EditText ageET = findViewById(R.id.editText6);
         ageET.setText(this.age + "");
         ageET.addTextChangedListener(new TextWatcher() {
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        //单位
+        //单位  unit
         EditText unitET = findViewById(R.id.editText4);
         unitET.setText("0");
         unitET.addTextChangedListener(new TextWatcher() {
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //性别
+        //性别  gender
         EditText sexET = findViewById(R.id.editText5);
         sexET.setText("0");
         sexET.addTextChangedListener(new TextWatcher() {
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //用户组
+        //用户组  user group
         EditText groupET = findViewById(R.id.editText7);
         groupET.setText("0");
         groupET.addTextChangedListener(new TextWatcher() {

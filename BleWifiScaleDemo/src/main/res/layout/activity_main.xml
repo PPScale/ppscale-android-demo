@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lefu.ppscale.ble.activity.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
 
@@ -124,12 +123,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="数据列表"
+        android:text="@string/data_list"
         app:layout_constraintBottom_toTopOf="@+id/scaleWeightBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
     <Button

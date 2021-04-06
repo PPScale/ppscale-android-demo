@@ -5,7 +5,8 @@
 注意：ppscale是蓝牙连接逻辑以及数据解析逻辑。另一个是Android层蓝牙封装库。集成SDK的开发者无需关心里面的逻辑实现。在开发者集成的时候，请采用从maven下载的库的集成方式集成。建议开发者查看README.md文档，完成集成。
 
 ## 一、 蓝牙wiFi相关的文档
-[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md) 
+示例module是：BleWifiScaleDemo
+[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md)   |  
 [Bluetooth WIFI Scale example English](BleWifiScaleDemo/README_EN.md) 
         
 ## 二、蓝牙体脂秤示例

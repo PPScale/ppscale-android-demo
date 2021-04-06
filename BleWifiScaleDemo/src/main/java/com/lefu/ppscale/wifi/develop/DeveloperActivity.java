@@ -127,12 +127,12 @@ public class DeveloperActivity extends AppCompatActivity {
 
         @Override
         public void monitorModifyServerDNSSuccess() {
-            Toast.makeText(DeveloperActivity.this, "发送DNS成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DeveloperActivity.this, R.string.dns_sent_successfully, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void monitorModifyServerIpSuccess() {
-            Toast.makeText(DeveloperActivity.this, "发送SeviceIp成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DeveloperActivity.this, R.string.service_ip_sent_successfully, Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -152,10 +152,10 @@ public class DeveloperActivity extends AppCompatActivity {
         public void monitorBluetoothSwitchState(PPBleSwitchState ppBleSwitchState) {
             switch (ppBleSwitchState) {
                 case PPBleSwitchStateOn:
-                    tvTitle.setText("系统蓝牙打开");
+                    tvTitle.setText(R.string.system_blutooth_on);
                     break;
                 case PPBleSwitchStateOff:
-                    tvTitle.setText("系统蓝牙关闭");
+                    tvTitle.setText(R.string.system_bluetooth_disconnect);
                     break;
             }
             reStartConnectView.setVisibility(View.VISIBLE);
@@ -167,31 +167,31 @@ public class DeveloperActivity extends AppCompatActivity {
             reStartConnectView.setVisibility(View.GONE);
             switch (ppBleWorkState) {
                 case PPBleStateSearchCanceled:
-                    Logger.d("取消扫描");
+                    Logger.d(getString(R.string.scan_cancle));
 
-                    tvTitle.setText("扫描");
+                    tvTitle.setText(getString(R.string.scan_cancle));
                     break;
                 case PPBleWorkSearchTimeOut:
-                    Logger.d("扫描超时");
+                    Logger.d(getString(R.string.scan_time_out));
 
-                    tvTitle.setText("扫描超时");
+                    tvTitle.setText(getString(R.string.scan_time_out));
                     break;
                 case PPBleWorkStateConnected:
-                    Logger.d("设备已连接");
+                    Logger.d(getString(R.string.device_connected));
 
-                    tvTitle.setText("设备已连接");
+                    tvTitle.setText(getString(R.string.device_connected));
                     break;
                 case PPBleWorkStateSearching:
-                    Logger.d("扫描中");
-                    tvTitle.setText("扫描中");
+                    Logger.d(getString(R.string.scanning));
+                    tvTitle.setText(getString(R.string.scanning));
                     break;
                 case PPBleWorkStateConnecting:
-                    Logger.d("设备连接中");
-                    tvTitle.setText("设备连接中");
+                    Logger.d(getString(R.string.device_connecting));
+                    tvTitle.setText(getString(R.string.device_connecting));
                     break;
                 case PPBleWorkStateDisconnected:
-                    Logger.d("设备已断开");
-                    tvTitle.setText("设备已断开");
+                    Logger.d(getString(R.string.device_disconnected));
+                    tvTitle.setText(getString(R.string.device_disconnected));
                     reStartConnectView.setVisibility(View.VISIBLE);
                     break;
             }

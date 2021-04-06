@@ -165,13 +165,13 @@ public class BleConfigWifiActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(BleConfigWifiActivity.this, "配网失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BleConfigWifiActivity.this, R.string.config_wifi_fail, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onResponse(SaveWifiGroupBean response, int id) {
                         if (response.isStatus()) {
-                            Toast.makeText(BleConfigWifiActivity.this, "配网成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BleConfigWifiActivity.this, R.string.config_wifi_success, Toast.LENGTH_SHORT).show();
                             DeviceModel device = DBManager.manager().getDevice(address);
                             if (device != null) {
                                 device.setSn(sn);
@@ -180,7 +180,7 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                             }
                             finish();
                         } else {
-                            String content = TextUtils.isEmpty(response.getMsg()) ? "配网失败" : response.getMsg();
+                            String content = TextUtils.isEmpty(response.getMsg()) ? getString(R.string.config_wifi_fail) : response.getMsg();
                             Toast.makeText(BleConfigWifiActivity.this, content, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -227,32 +227,32 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         @Override
         public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
             if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
-                Logger.d("设备已连接");
+                Logger.d(getString(R.string.device_connected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {
-                Logger.d("设备连接中");
+                Logger.d(getString(R.string.device_connecting));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
-                Logger.d("设备已断开");
+                Logger.d(getString(R.string.device_disconnected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
-                Logger.d("停止扫描");
+                Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
-                Logger.d("停止扫描");
+                Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
-                Logger.d("扫描中");
+                Logger.d(getString(R.string.scanning));
             } else {
-                Logger.e("蓝牙状态异常");
+                Logger.e(getString(R.string.bluetooth_status_is_abnormal));
             }
         }
 
         @Override
         public void monitorBluetoothSwitchState(PPBleSwitchState ppBleSwitchState) {
             if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOff) {
-                Logger.e("系统蓝牙断开");
-                Toast.makeText(BleConfigWifiActivity.this, "系统蓝牙断开", Toast.LENGTH_SHORT).show();
+                Logger.e(getString(R.string.system_bluetooth_disconnect));
+                Toast.makeText(BleConfigWifiActivity.this, getString(R.string.system_bluetooth_disconnect), Toast.LENGTH_SHORT).show();
             } else if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOn) {
-                Logger.d("系统蓝牙打开");
-                Toast.makeText(BleConfigWifiActivity.this, "系统蓝牙打开", Toast.LENGTH_SHORT).show();
+                Logger.d(getString(R.string.system_blutooth_on));
+                Toast.makeText(BleConfigWifiActivity.this, getString(R.string.system_blutooth_on), Toast.LENGTH_SHORT).show();
             } else {
-                Logger.e("系统蓝牙异常");
+                Logger.e(getString(R.string.system_bluetooth_abnormal));
             }
         }
     };

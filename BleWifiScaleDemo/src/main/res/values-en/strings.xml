@@ -58,6 +58,28 @@
     <string name="wifi_config_other">Change other Wi-Fi</string>
     <string name="select_device_type_next">Next</string>
     <string name="wifi_config_disconnected">The network is disconnected</string>
+    <string name="scan_time_out">scan timeout</string>
+    <string name="scan_cancle">cancel scanning </string>
+    <string name="data_list">data list</string>
+    <string name="config_wifi_fail">distribution network failed</string>
+    <string name="config_wifi_success">distribution network success</string>
+    <string name="corfirm_delete">Are you sure to delete?</string>
+    <string name="prompt">prompt</string>
+    <string name="determine">OK</string>
+    <string name="cancel">cancel</string>
+    <string name="dns_sent_successfully">DNS sent successfully </string>
+    <string name="service_ip_sent_successfully">Send SeviceIp successfully</string>
+    <string name="get_ssid">get SSID</string>
+    <string name="modify_serverip">modify ServerIP</string>
+    <string name="modify_serverdns">modify ServerDNS</string>
+    <string name="server_ip">server IP</string>
+    <string name="server_dns">server DNS</string>
+    <string name="reconnection">Reconnect</string>
+    <string name="clear_ssid">clear SSID</string>
+    <string name="to_config_the_network">to the distribution network</string>
+    <string name="clear_fail">clear failure </string>
+    <string name="clear_success">cleared successfully</string>
+    <string name="setting">Settings</string>
 
 
 </resources>

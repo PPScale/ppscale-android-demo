@@ -58,5 +58,27 @@
     <string name="wifi_config_other">Change other Wi-Fi</string>
     <string name="select_device_type_next">Next</string>
     <string name="wifi_config_disconnected">The network is disconnected</string>
+    <string name="scan_time_out">扫描超时</string>
+    <string name="scan_cancle">取消扫描</string>
+    <string name="data_list">数据列表</string>
+    <string name="config_wifi_fail">配网失败</string>
+    <string name="config_wifi_success">配网成功</string>
+    <string name="corfirm_delete">确定删除?</string>
+    <string name="prompt">提示</string>
+    <string name="determine">确定</string>
+    <string name="cancel">取消</string>
+    <string name="dns_sent_successfully">发送DNS成功</string>
+    <string name="service_ip_sent_successfully">发送SeviceIp成功</string>
+    <string name="get_ssid">获取SSID</string>
+    <string name="modify_serverip">修改ServerIP</string>
+    <string name="modify_serverdns">修改ServerDNS</string>
+    <string name="server_ip">服务端IP</string>
+    <string name="server_dns">服务端DNS</string>
+    <string name="reconnection">重连</string>
+    <string name="clear_ssid">清除SSID</string>
+    <string name="to_config_the_network">去配网</string>
+    <string name="clear_fail">清除失败</string>
+    <string name="clear_success">清除成功</string>
+    <string name="setting">设置</string>
 
 </resources>

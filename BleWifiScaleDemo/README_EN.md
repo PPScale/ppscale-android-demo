@@ -3,6 +3,10 @@
 #### 1.1 Operating environment
 - The iOS version is 9.0 above, and it needs to be run on a real machine.
 - The Android version is 5.0 above, and it needs to be run on a real machine.
+
+[Android For source code example, please click](https://github.com/PPScale/ppscale-android-demo.git)
+
+
 --- 
 #### 1.2  Some name conventions
 - Bluetooth WiFi scale: Bluetooth WiFi dual mode, can transmit data through Bluetooth, can connect to the cloud server through the router for data exchange after the network configuration is completed.
@@ -13,12 +17,42 @@
 - Fat test failed: If you are using a body fat scale, but you do not see the fat test process during the measurement, please make sure that you are standing with bare feett and the soles of your feet are touching the electrodes.
 - Device network configuration: the process of issuing router account and password information via Bluetooth.
 
-#### 1.3 Need permission
+
+---
+#### 1.3 Development Process
+1. You or your team are required to complete the code operation on the server side and generate a domain name address for use by the name and App. For examples, please refer to the example and agreement documents on the server side;
+2. The Bluetooth WiFi scale needs to configure the domain name address of your server;
+3. You need to modify the url in NetUtil.java to be your server address, which corresponds to the address of the scale terminal
+
+
+---
+#### 1.4 How to use demo
+
+1. Make sure you have completed the changes in 1.3 above
+2. Compile and run BleWifiScaleDemo App
+3. Then click "Bind Device", and then load the scale to complete the weighing. After completion, the App will pop up a window to select. You can go directly to the network configuration page, or you can go to the device list page and go to the network configuration page later.
+4. "Data Details" can view your last set of data
+5. The "data list" can be checked. The offline data sent from the scale to the server requires the server to develop a corresponding interface
+6. "Weighing on the scale" can be used again after you bind the equipment
+7. "Device Management" can view the list of bound devices
+8. After you bind the device, you can see the device on the "Device Management" page, and you can configure the network on the "Device Management" page
+
+
+---
+#### 1.5 Develop how to use this mode
+1. On the "Device Management" page, you can also enter the developer mode to set the scale. When entering the developer mode, a Bluetooth connection will be initiated, and the connection status will be displayed in the title bar at the top.
+2. You can get the SSID, Password and SN of the current scale
+3. You can configure the server domain name of the scale, which is divided into two types: Ip and domain name. When you need to modify the server address of the scale, you can use these two methods, just configure one.
+4. You can clear the configured SSID and Password on the scale
+5. To reconnect is to reconnect to Bluetooth.
+
+---
+#### 1.6 Need permission
 In Android 6.0 and above system versions, make sure to enable it before starting the scan
      1. Positioning permissions
      2. Positioning switch
      3. Bluetooth switch
-     
+
 ```
      <!-- Access to the network, network positioning requires Internet access-->
      <uses-permission android:name="android.permission.INTERNET" />
@@ -29,7 +63,8 @@ In Android 6.0 and above system versions, make sure to enable it before starting
      <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
 ```
-    
+
+---  
 Add the following permissions to the manifest file
 
 ### 2. Scenarios implemented in the BleWifiScaleDemo 

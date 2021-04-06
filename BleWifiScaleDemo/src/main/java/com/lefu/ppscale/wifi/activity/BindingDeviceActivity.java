@@ -1,23 +1,19 @@
 package com.lefu.ppscale.wifi.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.lefu.healthu.business.mine.binddevice.BindDeviceWiFiLockSelectConfigNetDialog;
 import com.lefu.ppscale.wifi.DBManager;
 import com.lefu.ppscale.wifi.R;
-
 import com.lefu.ppscale.wifi.model.DeviceModel;
 import com.lefu.ppscale.wifi.util.DataUtil;
 import com.lefu.ppscale.wifi.util.PPUtil;
@@ -26,11 +22,11 @@ import com.peng.ppscale.business.ble.PPScale;
 import com.peng.ppscale.business.ble.listener.PPBleStateInterface;
 import com.peng.ppscale.business.ble.listener.PPDeviceInfoInterface;
 import com.peng.ppscale.business.ble.listener.PPHistoryDataInterface;
-import com.peng.ppscale.business.device.PPDeviceType;
-import com.peng.ppscale.business.device.PPUnitType;
 import com.peng.ppscale.business.ble.listener.PPLockDataInterface;
 import com.peng.ppscale.business.ble.listener.PPProcessDateInterface;
 import com.peng.ppscale.business.ble.listener.ProtocalFilterImpl;
+import com.peng.ppscale.business.device.PPDeviceType;
+import com.peng.ppscale.business.device.PPUnitType;
 import com.peng.ppscale.business.state.PPBleSwitchState;
 import com.peng.ppscale.business.state.PPBleWorkState;
 import com.peng.ppscale.util.Logger;
@@ -122,7 +118,7 @@ public class BindingDeviceActivity extends FragmentActivity {
     }
 
     /**
-     * 解析数据回调
+     * 解析数据回调 Parse data callback
      *
      * @return
      */
@@ -130,7 +126,7 @@ public class BindingDeviceActivity extends FragmentActivity {
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setPPProcessDateInterface(new PPProcessDateInterface() {
             /**
-             * 过程数据
+             * 过程数据  Process data
              * @param bodyBaseModel
              * @param deviceModel
              */
@@ -143,7 +139,7 @@ public class BindingDeviceActivity extends FragmentActivity {
         });
         protocalFilter.setPPLockDataInterface(new PPLockDataInterface() {
             /**
-             * 锁定数据
+             * 锁定数据  Lock data
              *
              * @param bodyFatModel
              * @param deviceModel
@@ -162,14 +158,15 @@ public class BindingDeviceActivity extends FragmentActivity {
                         weightTextView.setText(weightStr);
                     }
                     if (PPDeviceType.Scale.isConfigWifiScale(deviceModel.getDeviceName())) {
-                        //蓝牙WiFi秤
+                        //Bluetooth WiFi scale
                         showWiFiConfigDialog(weightStr, deviceModel);
                     } else {
-                        //普通蓝牙秤
+                        //Ordinary bluetooth scale
                         showDialog(deviceModel, bodyFatModel);
                     }
                 } else {
-                    Logger.d("正在测量心率");
+                    //如果没有心率秤则此处不必处理  If you don’t have a heart rate scale, you don’t have to deal with it here
+                    Logger.d("Heart rate is being measured");
                 }
             }
         });
@@ -177,12 +174,12 @@ public class BindingDeviceActivity extends FragmentActivity {
         protocalFilter.setDeviceInfoInterface(new PPDeviceInfoInterface() {
             @Override
             public void softwareRevision(PPDeviceModel deviceModel) {
-                Logger.d("版本号：" + deviceModel.getFirmwareVersion());
+                Logger.d("Scale Ver：" + deviceModel.getFirmwareVersion());
             }
 
             @Override
             public void batteryPower(PPDeviceModel deviceModel) {
-                Logger.d("电量：" + deviceModel.getBatteryPower());
+                Logger.d("Scale Electricity：" + deviceModel.getBatteryPower());
             }
         });
 
@@ -190,7 +187,7 @@ public class BindingDeviceActivity extends FragmentActivity {
             //Do not receive offline data when binding the device， If you need to receive offline data, please implement this interface
             protocalFilter.setPPHistoryDataInterface(new PPHistoryDataInterface() {
                 /**
-                 * 历史数据
+                 * historical data
                  *
                  * @param bodyBaseModel
                  * @param isEnd
@@ -287,7 +284,7 @@ public class BindingDeviceActivity extends FragmentActivity {
             } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
                 Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
-                Logger.d(getString(R.string.stop_scanning));
+                Logger.d(getString(R.string.scan_time_out));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                 Logger.d(getString(R.string.scanning));
             } else {

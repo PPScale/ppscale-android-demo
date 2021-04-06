@@ -60,9 +60,9 @@ public class DeviceListActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(DeviceListActivity.this);
-                builder.setMessage("确定删除?");
-                builder.setTitle("提示");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.corfirm_delete);
+                builder.setTitle(R.string.prompt);
+                builder.setPositiveButton(R.string.determine, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (list != null) {
@@ -77,7 +77,7 @@ public class DeviceListActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("取消", null);
+                builder.setNegativeButton(R.string.cancel, null);
                 builder.show();
                 return true;
             }
@@ -124,16 +124,16 @@ public class DeviceListActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(DeviceListActivity.this, "清除失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DeviceListActivity.this, R.string.clear_fail, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onResponse(SaveWifiGroupBean response, int id) {
                         if (response.isStatus()) {
-                            Toast.makeText(DeviceListActivity.this, "清除成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DeviceListActivity.this, R.string.clear_success, Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            String content = TextUtils.isEmpty(response.getMsg()) ? "清除失败" : response.getMsg();
+                            String content = TextUtils.isEmpty(response.getMsg()) ? getString(R.string.clear_fail) : response.getMsg();
                             Toast.makeText(DeviceListActivity.this, content, Toast.LENGTH_SHORT).show();
                         }
                     }

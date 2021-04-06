@@ -40,7 +40,7 @@ public class DeviceListAdapter extends ArrayAdapter {
             if (!TextUtils.isEmpty(deviceModel.getSsid())) {
                 tv_ssid.setText(deviceModel.getSsid());
             } else {
-                tv_ssid.setText("去配网");
+                tv_ssid.setText(R.string.to_config_the_network);
             }
         } else {
             tv_ssid.setVisibility(View.GONE);

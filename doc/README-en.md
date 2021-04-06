@@ -2,9 +2,10 @@
 
 #  LEFU Bluetooth Scale SDK
 
-## 一、[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md) 
+## 一、Bluetooth WiFi related documents
+The example module is: BleWifiScaleDemo
+[蓝牙WIFI秤文档中文](BleWifiScaleDemo/README_CN.md)  | 
 [Bluetooth WIFI Scale example](BleWifiScaleDemo/README_EN.md) 
-   
    
 ## 二、Bluetooth body fat scale example  
 

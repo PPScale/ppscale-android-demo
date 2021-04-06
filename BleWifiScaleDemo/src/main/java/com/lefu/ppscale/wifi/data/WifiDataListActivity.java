@@ -51,10 +51,10 @@ public class WifiDataListActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(WifiDataListActivity.this);
-                builder.setMessage("确定删除?");
-                builder.setTitle("提示");
+                builder.setMessage(R.string.corfirm_delete);
+                builder.setTitle(R.string.prompt);
 
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.determine, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                        DBManager.manager().deleteDevice(list.get(position));
@@ -63,7 +63,7 @@ public class WifiDataListActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("取消", null);
+                builder.setNegativeButton(R.string.cancel, null);
                 builder.show();
                 return true;
             }
