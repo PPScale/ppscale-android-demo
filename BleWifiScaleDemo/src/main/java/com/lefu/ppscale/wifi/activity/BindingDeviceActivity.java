@@ -114,6 +114,7 @@ public class BindingDeviceActivity extends FragmentActivity {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
                 .setUnitType(unitType)
+                .setSearchTag(BleOptions.SEARCH_TAG_NORMAL) //If you need to connect directly, please switch to BleOptions.SEARCH_TAG_DIRECT_CONNECT
                 .build();
     }
 
