@@ -28,6 +28,7 @@ allprojects {
         mavenCentral()
 //        maven { url 'http://192.168.16.197:9090/nexus/content/repositories/public' }
         maven { url 'http://nexus.lefuenergy.com/repository/maven-public' }
+        maven { url 'https://jitpack.io' }
     }
 }
 

@@ -1,3 +1,4 @@
+include ':qnscalesdkX'
 include ':app'
 include ':BleWifiScaleDemo'
 include ':bluetoothkit'

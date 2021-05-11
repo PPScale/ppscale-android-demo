@@ -19,6 +19,7 @@ public class PPApplication extends Application {
         mApp = this;
         initGreenDao();
 
+        PPScale.init(this);
         PPScale.setDebug(true);
     }
 
