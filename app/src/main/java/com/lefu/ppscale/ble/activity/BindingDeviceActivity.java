@@ -202,7 +202,7 @@ public class BindingDeviceActivity extends Activity {
                     .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
+            ppScale.startSearchBluetoothScaleWithMacAddressList(false);
         } else {
             //绑定已有设备
             List<DeviceModel> deviceList = DBManager.manager().getDeviceList();
@@ -217,7 +217,7 @@ public class BindingDeviceActivity extends Activity {
                     .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
+            ppScale.startSearchBluetoothScaleWithMacAddressList(false);
         }
 
     }
@@ -266,6 +266,7 @@ public class BindingDeviceActivity extends Activity {
                 Logger.d(getString(R.string.device_connecting));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
                 Logger.d(getString(R.string.device_disconnected));
+
             } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
                 Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
