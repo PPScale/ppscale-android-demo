@@ -25,6 +25,7 @@
         <activity android:name=".activity.BMDJConnectActivity" />
         <activity android:name=".activity.BMDJTimeActivity" />
         <activity android:name=".activity.BMDJIntroduceActivity" />
+        <activity android:name="TestBleActivity"/>
     </application>
 
 </manifest>
