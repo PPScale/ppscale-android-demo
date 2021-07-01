@@ -18,9 +18,9 @@ android {
         }
     }
 
-    packagingOptions {
-        doNotStrip '*/*/*.so'
-    }
+//    packagingOptions {
+//        doNotStrip '*/*/*.so'
+//    }
 }
 
 dependencies {
