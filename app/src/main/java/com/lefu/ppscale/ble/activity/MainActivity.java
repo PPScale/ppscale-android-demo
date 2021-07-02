@@ -28,8 +28,6 @@ import com.peng.ppscale.vo.PPBodyFatModel;
 import com.peng.ppscale.vo.PPUserModel;
 import com.peng.ppscale.vo.PPUserSex;
 
-
-
 public class MainActivity extends AppCompatActivity {
 
     TextView weightTextView;

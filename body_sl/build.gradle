@@ -1,2 +1,2 @@
 configurations.maybeCreate("default")
-artifacts.add("default", file('body_sl_20210701.aar'))
+artifacts.add("default", file('body_sl_20210702.aar'))

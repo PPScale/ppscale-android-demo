@@ -1,6 +1,6 @@
+include ':scalelibdemo'
 include ':body_sl'
 include ':qnscalesdkX'
 include ':app'
-include ':BleWifiScaleDemo'
 include ':bluetoothkit'
 include ':ppscale'
