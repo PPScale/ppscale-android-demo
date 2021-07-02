@@ -52,8 +52,9 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation project(':ppscale')
 //    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-//    implementation('com.peng.ppscale:ppscale-abyon:0.0.4.16') {
+//    implementation('com.peng.ppscale:ppscale-abyon:0.0.4.16.17') {
 //        exclude group: 'com.inuker.bluetooth'
 //    }
 
+    implementation project(":body_sl")
 }

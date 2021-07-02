@@ -33,8 +33,8 @@ import com.peng.ppscale.vo.PPUserSex;
 public class MainActivity extends AppCompatActivity {
 
     TextView weightTextView;
-    int height = 180;
-    int age = 18;
+    int height = 170;
+    int age = 31;
     PPUnitType unit = PPUnitType.Unit_KG;
     PPUserSex sex = PPUserSex.PPUserSexMale;
     int group = 0;
