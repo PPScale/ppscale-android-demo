@@ -14,6 +14,7 @@ import com.lefu.ppscale.ble.R;
 import com.lefu.ppscale.ble.model.DataUtil;
 import com.lefu.ppscale.ble.model.DeviceModel;
 import com.lefu.ppscale.ble.model.PPUtil;
+import com.peng.ppscale.business.abyon.AbyonHelper;
 import com.peng.ppscale.business.ble.BleOptions;
 import com.peng.ppscale.business.ble.PPScale;
 import com.peng.ppscale.business.ble.listener.PPBleStateInterface;
@@ -73,6 +74,8 @@ public class BindingDeviceActivity extends Activity {
         searchType = getIntent().getIntExtra(SEARCH_TYPE, 0);
 
         userModel = DataUtil.util().getUserModel();
+
+        AbyonHelper.getInstance().delayInit(this);
 
         bindingDevice();
     }
