@@ -50,11 +50,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'org.greenrobot:greendao:3.2.2'
-    implementation project(':ppscale')
-//    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-//    implementation('com.peng.ppscale:ppscale-abyon:0.0.4.16.17') {
+//    implementation project(':ppscale')
+    implementation('com.peng.ppscale:ppscale-abyon-e:0.0.4.16.19') {
 //        exclude group: 'com.inuker.bluetooth'
-//    }
+    }
 
-    implementation project(":body_sl")
 }
