@@ -100,6 +100,7 @@ public class BindingDeviceActivity extends Activity {
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
+//                .setSearchTag(BleOptions.SEARCH_TAG_DIRECT_CONNECT)//直连
                 .setUnitType(unitType)
                 .build();
     }

@@ -104,8 +104,9 @@
 注意：如果需要自动循环扫描，需要在lockedData()后重新调用 ppScale.startSearchBluetoothScaleWithMacAddressList()
     
 ###### 1.2  BleOptions 蓝牙参数配置
+####### 1.2.1  
 
-    //配置需要扫描的秤类型 默认全部，可选为了更快的搜索你的设备，你可以选择你需要使用的设备能力
+     //配置需要扫描的秤类型 默认全部，可选为了更快的搜索你的设备，你可以选择你需要使用的设备能力
      *                     具备的能力：
      *                     体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
      *                     脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
@@ -119,6 +120,14 @@
      *                     所有秤{@link BleOptions.ScaleFeatures#FEATURES_ALL}
      *                     自定义{@link BleOptions.ScaleFeatures#FEATURES_CUSTORM} //选则自定义需要设置PPScale的setDeviceList()
     setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
+    
+####### 1.2.2     
+    
+        public static final int SEARCH_TAG_NORMAL = 0; //默认，先广播，再连接，再断开
+        public static final int SEARCH_TAG_DIRECT_CONNECT = 1; //直连
+        public static final int SEARCH_TAG_BABY = 2;  //抱婴连接模式，前后两次称重，中间不断开
+    
+     BleOptions()setSearchTag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
     
 ###### 1.3  PPBleStateInterface，蓝牙状态监控回调和系统蓝牙状态回调
 
