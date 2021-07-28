@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
         PPBodyFatModel bodyData = DataUtil.util().getBodyDataModel();
 
         if (bodyData != null) {
-            String weightStr = PPUtil.getWeight(this.unit, bodyData.getPpWeightKg());
+            String weightStr = PPUtil.getWeight(this.unit, bodyData.getPpWeightKg(), bodyData.getScaleName());
             weightTextView.setText(getString(R.string.body_weight_) + weightStr);
         }
     }

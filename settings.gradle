@@ -1,3 +1,4 @@
+include ':ppscale-new-master'
 include ':body_sl'
 include ':app'
 include ':BleWifiScaleDemo'

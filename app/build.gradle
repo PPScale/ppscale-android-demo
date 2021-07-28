@@ -9,7 +9,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.lefu.ppscalel.ble"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode LIB_VERSION_CODE as int
         versionName LIB_VERSION
@@ -50,10 +50,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'org.greenrobot:greendao:3.2.2'
-//    implementation project(':ppscale')
+    implementation project(':ppscale-new-master')
 //    implementation (name: 'ppscalelibrary1.0.1', ext: 'aar')
-    implementation('com.peng.ppscale:ppscale-new-master:0.0.4.18') {
+//    implementation('com.peng.ppscale:ppscale-new-master-0.0.5') {
 //        exclude group: 'com.inuker.bluetooth'
-    }
+//    }
 
 }

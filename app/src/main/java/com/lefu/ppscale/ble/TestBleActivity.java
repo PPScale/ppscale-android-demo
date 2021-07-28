@@ -11,7 +11,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.inuker.bluetooth.library.utils.ByteUtils;
+import com.peng.ppscale.util.ByteUtils;
+
 
 public class TestBleActivity extends AppCompatActivity {
 
