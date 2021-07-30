@@ -100,7 +100,7 @@ public class BindingDeviceActivity extends Activity {
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
-                .setSearchTag(BleOptions.SEARCH_TAG_DIRECT_CONNECT)//直连  孕妇模式时请开启直连
+//                .setSearchTag(BleOptions.SEARCH_TAG_DIRECT_CONNECT)//直连  孕妇模式时请开启直连
                 .setUnitType(unitType)
                 .build();
     }
@@ -260,7 +260,7 @@ public class BindingDeviceActivity extends Activity {
 
     PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
         @Override
-        public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
+        public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState, PPDeviceModel deviceModel) {
             if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
                 Logger.d(getString(R.string.device_connected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {
