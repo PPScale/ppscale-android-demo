@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -29,12 +31,12 @@ import com.peng.ppscale.vo.PPUserModel;
 import com.peng.ppscale.vo.PPUserSex;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     TextView weightTextView;
     int height = 180;
     int age = 18;
+    int maternityMode = 0;//孕妇模式1  默认0
     PPUnitType unit = PPUnitType.Unit_KG;
     PPUserSex sex = PPUserSex.PPUserSexMale;
     int group = 0;
@@ -233,6 +235,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //孕妇模式
+        EditText maternityModeET = findViewById(R.id.editText8);
+        maternityModeET.setText("0");
+        maternityModeET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String number = s.toString();
+                if (number.length() > 0) {
+                    int maternityMode = Integer.parseInt(number);
+                    MainActivity.this.maternityMode = maternityMode;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -259,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
                 .setHeight(this.height)
                 .setGroupNum(this.group)
                 .setSex(this.sex)
+                .setMaternityMode(maternityMode) //孕妇模式 1  正常模式0  默认0
                 .build();
         DataUtil.util().setUserModel(userModel);
     }

@@ -226,6 +226,7 @@
         userHeight范围是100-220cm
         age范围是10-99
         sex 0为女 1为男   
+        maternityMode 0为正常 1为孕妇   
              
       
 ###### 1.6 食物秤说明
