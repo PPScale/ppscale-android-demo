@@ -4,7 +4,6 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import androidx.multidex.MultiDex;
 
 import com.lefu.ppscale.ble.dao.DaoMaster;
 import com.lefu.ppscale.ble.dao.DaoSession;
@@ -20,7 +19,6 @@ public class PPApplication extends Application {
         super.onCreate();
         mApp = this;
         initGreenDao();
-        MultiDex.install(this);
         PPScale.setDebug(true);
     }
 
