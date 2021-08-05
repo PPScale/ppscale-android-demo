@@ -12,29 +12,21 @@
 ## 二、蓝牙体脂秤示例
 ###### 2.1 蓝牙配网
 
-###  Ⅰ. 集成方式 -两种方式
+###  Ⅰ. 集成方式
 
 #####  gradle自动导入方式
-    
-1、在project项目目录下的build.gradle中加入
-    
-        allprojects {
-            repositories {
+
+在需要引入sdk的module下的build.gradle中加入
+ 
+         //根据不同的分支请采用不同的artifactId，格式是：ppscale-分支名
+         //下面是master分支的集成方式，已集成相应的so文件
+         dependencies {
                 、、、
-                 maven { url 'http://nexus.lefuenergy.com/repository/maven-public' }
-            }
-        }
-      
-2、在需要引入sdk的module下的build.gradle中加入
-        //根据不同的分支请采用不同的artifactId，格式是：ppscale-分支名
-        //下面是master分支的集成方式，已集成相应的so文件
-       
-        dependencies {
-            、、、
-                implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.10'     
-        }
-        
-        
+                    implementation project(':ppscale-new-master')
+                    //如果你的秤是直流秤，请再引用body_sl
+                    //implementation project(":body_sl")
+         }
+    
 ### Ⅱ .使用说明
 
 * 由于需要蓝牙连接，Demo需要真机运行。
@@ -51,13 +43,15 @@
     
 * 使用Demo过程中需要您打开蓝牙，同时给予Demo定位权限
 
-    1. 绑定设备 - 在这个控制器在被实例化后会开始扫描附近的外设，并将您的外设做一个记录。
+    1、蓝牙配网 - 该功能用于蓝牙WiFi秤，在给秤配置网络时使用
 
-    2. 上秤称重 - 这个控制器在被实例化后也会开始扫描附近的外设，通过过滤去连接已绑定过的设备。所以只有被绑定过后才能去进行上秤称重，否则无法接收到数据。
+    2. 绑定设备 - 在这个控制器在被实例化后会开始扫描附近的外设，并将您的外设做一个记录。
 
-    3. 设备管理 - 这个控制器会用列表的方式展示你在“绑定设备”页面绑定的外设。你可以通过长按的方式去删除已绑定设备。
+    3. 上秤称重 - 这个控制器在被实例化后也会开始扫描附近的外设，通过过滤去连接已绑定过的设备。所以只有被绑定过后才能去进行上秤称重，否则无法接收到数据。
 
-    4. 在“绑定设备”和“上秤称重”页面接收到外设返回的数据后，会自动停止扫描并断开与外设的连接，然后把数据通过回调的方式传回“主页信息”更新体重一栏，具体的数据可以去“ 数据详情”页查看。
+    4. 设备管理 - 这个控制器会用列表的方式展示你在“绑定设备”页面绑定的外设。你可以通过长按的方式去删除已绑定设备。
+
+    5. 在“绑定设备”和“上秤称重”页面接收到外设返回的数据后，会自动停止扫描并断开与外设的连接，然后把数据通过回调的方式传回“主页信息”更新体重一栏，具体的数据可以去“ 数据详情”页查看。
     
        
 ### Ⅲ .ppscalelib在蓝牙设备的使用
@@ -104,7 +98,7 @@
 注意：如果需要自动循环扫描，需要在lockedData()后重新调用 ppScale.startSearchBluetoothScaleWithMacAddressList()
     
 ###### 1.2  BleOptions 蓝牙参数配置
-####### 1.2.1  
+####### 1.2.1  设备能力选择
 
      //配置需要扫描的秤类型 默认全部，可选为了更快的搜索你的设备，你可以选择你需要使用的设备能力
      *                     具备的能力：
@@ -121,10 +115,10 @@
      *                     自定义{@link BleOptions.ScaleFeatures#FEATURES_CUSTORM} //选则自定义需要设置PPScale的setDeviceList()
     setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
     
-####### 1.2.2     
+####### 1.2.2    设备连接方式配置
     
         public static final int SEARCH_TAG_NORMAL = 0; //默认，先广播，再连接，再断开
-        public static final int SEARCH_TAG_DIRECT_CONNECT = 1; //直连
+        public static final int SEARCH_TAG_DIRECT_CONNECT = 1; //直连   支持孕妇模式的秤，请务必打开直连开关
         public static final int SEARCH_TAG_BABY = 2;  //抱婴连接模式，前后两次称重，中间不断开
     
      BleOptions()setSearchTag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
@@ -135,8 +129,9 @@
    
      PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
             //蓝牙状态监控
+            //deviceModel 在蓝牙处于扫描过程中，它是null
             @Override
-            public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
+            public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState, PPDeviceModel deviceModel) {
                 if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
                     Logger.d("设备已连接");
                 } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {
@@ -147,6 +142,8 @@
                     Logger.d("停止扫描");
                 } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                     Logger.d("扫描中");
+                } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
+                    Logger.d("扫描超时");
                 } else {
                     Logger.e("蓝牙状态异常");
                 }
@@ -284,8 +281,6 @@
           
 最后你需要在离开页面的之前调用stopSearch方法。
 具体的实现请参考Demo中BindingDeviceActivity和ScaleWeightActivity中的代码。
-
-
 
 
 ###### 1.8 PPBodyFatModel 实例化说明
@@ -482,6 +477,8 @@
     增加蓝牙WiFi设备重置功能
     ----0.0.4.10-----
     1、增加unitType字段 2、增加获取电量、固件版本号信息回调 
+    ----0.0.5.2----
+    1、增加两款直流秤的兼容 2、增加孕妇模式
     
 Contact Developer：
 Email: yanfabu-5@lefu.cc

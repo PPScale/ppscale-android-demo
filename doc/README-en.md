@@ -12,20 +12,16 @@ The example module is: BleWifiScaleDemo
 ###  Ⅰ . Integration method - two methods
 #####  gradle Automatic import method
 
-1、Add build.gradle in the project directory
-
-    allprojects {
-        repositories {
-            、、、
-             maven { url 'http://nexus.lefuenergy.com/repository/maven-public' }
-        }
-    }
-2、Add to build.gradle under the module that needs to import the SDK //Please use different artifactId according to different branches，The format is: ppscale-branch name // The following is the integration method of the master branch, the corresponding so file has been integrated
-    
-    dependencies {
-        、、、
-        implementation 'com.peng.ppscale:ppscale-new-master:0.0.4.10'     
-    }
+Add to build.gradle under the module that needs to import the SDK
+ 
+          //Please use different artifactId according to different branches, the format is: ppscale-branch name
+          //The following is the integration method of the master branch, the corresponding so file has been integrated
+          dependencies {
+                 ,,
+                     implementation project(':ppscale-new-master')
+                     //If your scale is a DC scale, please quote body_sl
+                     //implementation project(":body_sl")
+          }
     
 ### Ⅱ .Instruction of use
 
@@ -42,14 +38,16 @@ The example module is: BleWifiScaleDemo
 * Height range: 30-220 cm；Age range: 10-99 years old；Unit 0 represent kilogram，1 represent jin，2 represent pound；Gender 1 represent male，0 represent female；The value range of user group is 0-9（The specific scale needs this value）
 
 * You need to turn on Bluetooth and give Demo location permission when you using the Demo
+    
+    1. Bluetooth network configuration   -this function is used for Bluetooth WiFi scales, used when configuring the network for the scale
 
-    1、Binding device - It will start scanning for nearby peripherals after this controller is instantiated and make a record of your peripherals.
+    2、Binding device - It will start scanning for nearby peripherals after this controller is instantiated and make a record of your peripherals.
 
-    2、Weighing on scale - It will also start scanning nearby peripherals after this controller is instantiated, and connect to the bound devices through filtering. Therefore, the weighing can only be carried out after being bound, otherwise the data cannot be received.
+    3、Weighing on scale - It will also start scanning nearby peripherals after this controller is instantiated, and connect to the bound devices through filtering. Therefore, the weighing can only be carried out after being bound, otherwise the data cannot be received.
 
-    3、Equipment management - This controller will display the peripherals you bind on the "Bind Device" page in a list. You can delete the bound device by long pressing.
+    4、Equipment management - This controller will display the peripherals you bind on the "Bind Device" page in a list. You can delete the bound device by long pressing.
 
-    4、After receiving the data returned by the peripherals on the "Bind Device" and "Weighing on Scales" pages, it will automatically stop scanning and disconnect from the peripherals, and then send the data back to the "Homepage Information" update via callback For the weight column, you can check the the specific data on "Data Details".
+    5、After receiving the data returned by the peripherals on the "Bind Device" and "Weighing on Scales" pages, it will automatically stop scanning and disconnect from the peripherals, and then send the data back to the "Homepage Information" update via callback For the weight column, you can check the the specific data on "Data Details".
 
 ### Ⅲ .The use of ppscalelib
 ######  1.1 Bind or scan specified devices
@@ -94,6 +92,8 @@ Note: If you need to automatically cycle scan, you need to call again after load
 
 ######  1.2 BleOptions Bluetooth parameter configuration
 
+####### 1.2.1  Equipment capacity selection
+
         //Configure the type of scale that needs to be scanned default all，Optional 
      *                     Capabilities：
      *                     weighing scale {@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
@@ -110,12 +110,22 @@ Note: If you need to automatically cycle scan, you need to call again after load
                
         setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
         
+####### 1.2.2 Device connection configuration
+                 
+        public static final int SEARCH_TAG_NORMAL = 0; //By default, broadcast first, then connect, and then disconnect
+        public static final int SEARCH_TAG_DIRECT_CONNECT = 1; //Direct connection to scales that support maternity mode, please be sure to turn on the direct connection switch
+        public static final int SEARCH_TAG_BABY = 2; //Baby holding connection mode, weighing twice before and after, without disconnection in the middle
+        
+         BleOptions() --> setSearchTag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
+        
+        
 ###### 1.3 PPBleStateInterface, Bluetooth status monitoring callback and system Bluetooth status callback
 
     //Contains two callback methods, one is Bluetooth status monitoring, the other is system Bluetooth callback
 
      PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
             //Bluetooth status monitoring
+            //deviceModel is in the scanning process of Bluetooth, it is null
             @Override
             public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
                 if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
@@ -128,6 +138,8 @@ Note: If you need to automatically cycle scan, you need to call again after load
                     Logger.d("Stop scanning");
                 } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                     Logger.d("Scanning");
+                } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
+                    Logger.d("Scan timeout");
                 } else {
                     Logger.e("Bluetooth status is abnormal");
                 }
@@ -207,8 +219,48 @@ Note: If you need to automatically cycle scan, you need to call again after load
     userHeight range is 100-220cm
     age range is10-99
     sex 0 is female 1 is male   
+    maternityMode 0 is normal and 1 is pregnant
     
-###### 1.6 Related Bluetooth Operation
+###### 1.6 Instructions for Food Scale
+   
+Unit enumeration class PPUnitType
+    
+         Unit_KG(0),//KG
+    
+         Unit_LB(1),//LB
+    
+         PPUnitST(2),//ST
+    
+         PPUnitJin(3),//jin
+    
+         PPUnitG(4),//g
+    
+         PPUnitLBOZ(5),//lb:oz
+    
+         PPUnitOZ(6),//oz
+    
+         PPUnitMLWater(7),//ml(water)
+    
+         PPUnitMLMilk(8);//milk
+
+Positive and negative value problems:
+   
+        In the field of PPBodyFatModel:
+        int thanZero; //Positive and negative 0 means negative value 1 positive value
+
+Switch unit call:
+   
+         PPScale.changeKitchenScaleUnit(PPUnitType unitType)
+    
+Zero the food scale:
+        
+         PPScale.toZeroKitchenScale()
+   
+When using a food scale, you need to disconnect it manually when you don’t need to connect it
+   
+        PPScale.disConnect()  
+    
+###### 1.7 Related Bluetooth Operation
 
 Reserved Bluetooth operation object
 
@@ -224,7 +276,7 @@ Disconnect device
     
 Finally you need to call the stopSearch method before leaving the page. For specific implementation, please refer to the code in BindingDeviceActivity and ScaleWeightActivity in Demo。
 
-###### 1.7 PPBodyFatModel Parameter Description
+###### 1.8 PPBodyFatModel Parameter Description
 
     protected int impedance;                                //Impedance value (encrypted)
     //    protected float ppZTwoLegs;   //Foot-to-foot impedance value(Ω), range 200.0 ~ 1200.0
@@ -265,7 +317,7 @@ Finally you need to call the stopSearch method before leaving the page. For spec
 
 Note: When you get the object when using it, please call the corresponding get method to get the corresponding value
 
-###### 1.8  PPBodyFatModel Parameter Description
+###### 1.9  PPBodyFatModel Parameter Description
   
   1.Error type: PPBodyEnum.PPBodyfatErrorType
   
@@ -362,13 +414,36 @@ Return the time of standing on one foot with closed eyes in the callback functio
 
 ### V .Version update instructions
    
-    ----0.0.1-----
-    1、Add maven configuration  2、Increase compatibility 'BodyFat Scale1'
-    ----0.0.2-----
-    1、Add Bluetooth WIFI distribution network function
-    ----0.0.3-----
-    1、Optimize Bluetooth distribution network function  2、Improve broadcast data compatibility
-
+        ----0.0.1-----
+        1、Add maven configuration  2、Increase compatibility 'BodyFat Scale1'
+        ----0.0.2-----
+        1、Add Bluetooth WIFI distribution network function
+        ----0.0.3-----
+        1. Optimize the Bluetooth distribution network function 2. Improve the compatibility of broadcast data
+        ----0.0.3.4-----
+        1. Increase Health Scale5
+        ----0.0.3.6-----
+        1. Add Bluetooth device information to the Bluetooth distribution network
+        ----0.0.3.7-----
+        1. Add LF_SC fat broadcasting scale
+        ----0.0.3.9-----
+        1. Add PPBodyEnum.kt, increase error type output, modify body type, obesity level, health level callback method
+        ----0.0.4.1-----
+        Increase food scale compatible with 11byte
+        ----0.0.4.3-----
+        1. Optimized for frequent connection, the weighing cannot be performed normally when connected continuously. 2. PPUserModel is initialized in advance
+        ----0.0.4.5-----
+        Modify the broadcast analysis logic
+        ----0.0.4.6-----
+        Add baby weighing tag to optimize baby weighing
+        ----0.0.4.7-----
+        Increase compatible with Electronic Scale1
+        ----0.0.4.8-----
+        Add Bluetooth WiFi device reset function
+        ----0.0.4.10-----
+        1. Add the unitType field 2. Add the callback for obtaining battery and firmware version number information
+        ----0.0.5.2----
+        1. Increase compatibility of two DC scales 2. Increase maternity mode
 
 Contact Developer：
 Email: yanfabu-5@lefu.cc
