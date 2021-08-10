@@ -224,8 +224,9 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     }
 
     PPBleStateInterface bleStateInterface = new PPBleStateInterface() {
+
         @Override
-        public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState) {
+        public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState, PPDeviceModel ppDeviceModel) {
             if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
                 Logger.d(getString(R.string.device_connected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {

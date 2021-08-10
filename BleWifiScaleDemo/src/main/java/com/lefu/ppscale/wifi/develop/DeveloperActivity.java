@@ -139,13 +139,8 @@ public class DeveloperActivity extends AppCompatActivity {
     PPBleStateInterface ppBleStateInterface = new PPBleStateInterface() {
 
         @Override
-        public void monitorBluetoothWorkState(final PPBleWorkState ppBleWorkState) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    onBleWorkStateChange(ppBleWorkState);
-                }
-            });
+        public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState, PPDeviceModel ppDeviceModel) {
+            onBleWorkStateChange(ppBleWorkState);
         }
 
         @Override
