@@ -270,7 +270,7 @@ public class BindingDeviceActivity extends Activity {
             } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
                 Logger.d(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
-                Logger.d(getString(R.string.stop_scanning));
+                Logger.d(getString(R.string.scan_timeout));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                 Logger.d(getString(R.string.scanning));
             } else {

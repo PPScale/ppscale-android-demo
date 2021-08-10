@@ -37,6 +37,7 @@
 	<string name="device_connecting">Device connection</string>
 	<string name="device_disconnected">Device disconnected</string>
 	<string name="stop_scanning">Stop scanning</string>
+    <string name="scan_timeout">Scan timeout</string>
 	<string name="scanning">Scan</string>
 	<string name="bluetooth_status_is_abnormal">Bluetooth is abnormal</string>
 	<string name="system_bluetooth_disconnect">Disconnect the Bluetooth system</string>
