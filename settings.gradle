@@ -1,3 +1,4 @@
+include ':ppscale-new-master'
 include ':app'
 include ':BleWifiScaleDemo'
 include ':bluetoothkit'
