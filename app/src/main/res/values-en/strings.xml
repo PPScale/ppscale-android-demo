@@ -9,6 +9,7 @@
 	<string name="gender">gender</string>
 	<string name="user_group">user group</string>
     <string name="maternity_mode">Maternity mode</string>
+    <string name="sport_mode">Athlete mode</string>
 	<string name="this_weighing_infomation">The weighing information :( For more information, please click on the data details)</string>
 	<string name="body_weight_">body weight:</string>
 	<string name="data_details">Data details</string>
@@ -25,6 +26,7 @@
 	<string name="value_range_age">Range: 10-99</string>
 	<string name="value_range_group">Range: 0-9</string>
     <string name="maternity_mode_tag">0 default   1 pregnant woman mode</string>
+    <string name="sport_mode_tag">0 default  1 athlete mode</string>
     <string name="please_select_function">Please select</string>
 	<string name="bmdj">Eyes closed one leg</string>
 	<string name="measure_weight">Measurement of body weight</string>

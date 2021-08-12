@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     int height = 180;
     int age = 18;
     int maternityMode = 0;//孕妇模式1  默认0
+    int sportMode = 0;//运动员模式1  默认0
     PPUnitType unit = PPUnitType.Unit_KG;
     PPUserSex sex = PPUserSex.PPUserSexMale;
     int group = 0;
@@ -259,6 +260,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //运动员模式
+        EditText sportModeET = findViewById(R.id.editText9);
+        sportModeET.setText("0");
+        sportModeET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String number = s.toString();
+                if (number.length() > 0) {
+                    int sportMode = Integer.parseInt(number);
+                    MainActivity.this.sportMode = sportMode;
+                }
+            }
+        });
 
     }
 
@@ -287,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
                 .setGroupNum(this.group)
                 .setSex(this.sex)
                 .setMaternityMode(maternityMode) //孕妇模式 1  正常模式0  默认0
+                .setSportsman(sportMode) //运动员模式 1  正常模式0  默认0
                 .build();
         DataUtil.util().setUserModel(userModel);
     }
