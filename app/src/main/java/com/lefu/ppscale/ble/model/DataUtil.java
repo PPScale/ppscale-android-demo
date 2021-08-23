@@ -4,10 +4,13 @@ import com.peng.ppscale.vo.PPBodyFatModel;
 import com.peng.ppscale.vo.PPUserModel;
 import com.peng.ppscale.vo.PPUserSex;
 
+import java.util.List;
+
 public class DataUtil {
     private static DataUtil dataUtil;
     private PPBodyFatModel bodyDataModel;
     private PPUserModel userModel;
+    List<PPBodyFatModel> bodyFatModels;
 
     public static DataUtil util() {
         if (dataUtil == null) {
@@ -34,6 +37,14 @@ public class DataUtil {
 
     public void setBodyDataModel(PPBodyFatModel bodyDataModel) {
         this.bodyDataModel = bodyDataModel;
+    }
+
+    public void setHistoryData(List<PPBodyFatModel> bodyFatModels) {
+        this.bodyFatModels = bodyFatModels;
+    }
+
+    public List<PPBodyFatModel> getHistoryData() {
+        return bodyFatModels;
     }
 
     public PPUserModel getUserModel() {

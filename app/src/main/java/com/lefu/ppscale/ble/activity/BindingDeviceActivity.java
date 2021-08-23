@@ -59,6 +59,8 @@ public class BindingDeviceActivity extends Activity {
     private int searchType;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
+    List<PPBodyFatModel> bodyFatModels = new ArrayList<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -175,9 +177,11 @@ public class BindingDeviceActivity extends Activity {
                  */
                 @Override
                 public void monitorHistoryData(PPBodyFatModel bodyBaseModel, boolean isEnd, String dateTime) {
-                    if (bodyBaseModel != null) {
+                    if (!isEnd) {
+                        bodyFatModels.add(bodyBaseModel);
                         Logger.d("ppScale_ isEnd = " + isEnd + " dateTime = " + dateTime + " bodyBaseModel weight kg = " + bodyBaseModel.getPpWeightKg());
                     } else {
+                        DataUtil.util().setHistoryData(bodyFatModels);
                         Logger.d("ppScale_ isEnd = " + isEnd);
                     }
                 }
