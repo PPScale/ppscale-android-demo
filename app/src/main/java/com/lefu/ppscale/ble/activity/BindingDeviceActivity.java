@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,7 +85,7 @@ public class BindingDeviceActivity extends Activity {
      * 参数配置
      * <p>
      *
-     * @param ScaleFeatures 为了更快的搜索你的设备，你可以选择你需要使用的设备能力
+     * @param //ScaleFeatures 为了更快的搜索你的设备，你可以选择你需要使用的设备能力
      *                      具备的能力：
      *                      体重秤{@link BleOptions.ScaleFeatures#FEATURES_WEIGHT}
      *                      脂肪秤{@link BleOptions.ScaleFeatures#FEATURES_FAT}
@@ -183,6 +185,7 @@ public class BindingDeviceActivity extends Activity {
                     } else {
                         DataUtil.util().setHistoryData(bodyFatModels);
                         Logger.d("ppScale_ isEnd = " + isEnd);
+                        Toast.makeText(BindingDeviceActivity.this, "历史数据读取完毕", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
