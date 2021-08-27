@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
+import android.os.Handler;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,7 @@ public class BindingDeviceActivity extends Activity {
     private int searchType;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
+    boolean isOnResume = false;//页面可见时再重新发起扫描
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,7 +104,7 @@ public class BindingDeviceActivity extends Activity {
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_NORMAL)
-//                .setSearchTag(BleOptions.SEARCH_TAG_DIRECT_CONNECT)//直连  孕妇模式时请开启直连
+                .setSearchTag(BleOptions.SEARCH_TAG_DIRECT_CONNECT)//直连  孕妇模式时请开启直连
                 .setUnitType(unitType)
                 .build();
     }
@@ -189,6 +193,7 @@ public class BindingDeviceActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        isOnResume = false;
         ppScale.stopSearch();
 
     }
@@ -203,7 +208,7 @@ public class BindingDeviceActivity extends Activity {
                     .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
+            ppScale.startSearchBluetoothScaleWithMacAddressList();
         } else {
             //绑定已有设备
             List<DeviceModel> deviceList = DBManager.manager().getDeviceList();
@@ -218,7 +223,7 @@ public class BindingDeviceActivity extends Activity {
                     .setUserModel(userModel)
                     .setBleStateInterface(bleStateInterface)
                     .build();
-            ppScale.startSearchBluetoothScaleWithMacAddressList(30 * 1000);
+            ppScale.startSearchBluetoothScaleWithMacAddressList();
         }
 
     }
@@ -284,6 +289,7 @@ public class BindingDeviceActivity extends Activity {
                 Logger.e(getString(R.string.system_bluetooth_disconnect));
                 Toast.makeText(BindingDeviceActivity.this, getString(R.string.system_bluetooth_disconnect), Toast.LENGTH_SHORT).show();
             } else if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOn) {
+                delayScan();
                 Logger.d(getString(R.string.system_blutooth_on));
                 Toast.makeText(BindingDeviceActivity.this, getString(R.string.system_blutooth_on), Toast.LENGTH_SHORT).show();
             } else {
@@ -291,6 +297,24 @@ public class BindingDeviceActivity extends Activity {
             }
         }
     };
+
+    public void delayScan() {
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isOnResume) {
+                    bindingDevice();
+                }
+            }
+        }, 1000);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOnResume = true;
+    }
 
     @Override
     protected void onDestroy() {
