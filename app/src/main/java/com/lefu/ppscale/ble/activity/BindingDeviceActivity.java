@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ import java.util.List;
 public class BindingDeviceActivity extends Activity {
 
     TextView weightTextView;
+    TextView logCat;
     PPScale ppScale;
 
     /**
@@ -69,6 +71,7 @@ public class BindingDeviceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bingdevice);
         weightTextView = findViewById(R.id.weightTextView);
+        logCat = findViewById(R.id.logCat);
 
         int unit = getIntent().getIntExtra(UNIT_TYPE, 0);
 
@@ -268,18 +271,25 @@ public class BindingDeviceActivity extends Activity {
         public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState, PPDeviceModel deviceModel) {
             if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
                 Logger.d(getString(R.string.device_connected));
+                setLog(getString(R.string.device_connected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {
                 Logger.d(getString(R.string.device_connecting));
+                setLog(getString(R.string.device_connecting));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
                 Logger.d(getString(R.string.device_disconnected));
+                setLog(getString(R.string.device_disconnected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
                 Logger.d(getString(R.string.stop_scanning));
+                setLog(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
                 Logger.d(getString(R.string.scan_timeout));
+                setLog(getString(R.string.scan_timeout));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
                 Logger.d(getString(R.string.scanning));
+                setLog(getString(R.string.scanning));
             } else {
                 Logger.e(getString(R.string.bluetooth_status_is_abnormal));
+                setLog(getString(R.string.bluetooth_status_is_abnormal));
             }
         }
 
@@ -289,12 +299,17 @@ public class BindingDeviceActivity extends Activity {
                 Logger.e(getString(R.string.system_bluetooth_disconnect));
                 Toast.makeText(BindingDeviceActivity.this, getString(R.string.system_bluetooth_disconnect), Toast.LENGTH_SHORT).show();
             } else if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOn) {
-                delayScan();
+//                delayScan();
                 Logger.d(getString(R.string.system_blutooth_on));
                 Toast.makeText(BindingDeviceActivity.this, getString(R.string.system_blutooth_on), Toast.LENGTH_SHORT).show();
             } else {
                 Logger.e(getString(R.string.system_bluetooth_abnormal));
             }
+        }
+
+        @Override
+        public void monitorLogData(String log) {
+            setLog(log);
         }
     };
 
@@ -329,6 +344,25 @@ public class BindingDeviceActivity extends Activity {
             builder = null;
         }
     }
+
+    private void setLog(final String log) {
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            if (logCat != null) {
+                logCat.append(log + "\n");
+            }
+        } else {
+            if (logCat != null) {
+                logCat.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        logCat.append(log + "\n");
+                    }
+                });
+            }
+        }
+    }
+
 }
 
 

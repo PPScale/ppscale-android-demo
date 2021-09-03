@@ -1,7 +1,11 @@
 package com.lefu.ppscale.ble.activity;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Looper;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lefu.ppscale.ble.R;
@@ -18,13 +22,16 @@ import com.peng.ppscale.vo.PPDeviceModel;
 public class BleConfigWifiActivity extends AppCompatActivity {
 
     private PPScale ppScale;
+    TextView logCat;
+    TextView logCat2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ble_config_wifi);
 
-
+        logCat = findViewById(R.id.logCat);
+        logCat2 = findViewById(R.id.logCat2);
         ProtocalFilterImpl protocalFilter = new ProtocalFilterImpl();
         protocalFilter.setConfigWifiInterface(new PPConfigWifiInterface() {
 
@@ -68,8 +75,10 @@ public class BleConfigWifiActivity extends AppCompatActivity {
     private BleOptions getBleOptions() {
         return new BleOptions.Builder()
                 .setFeaturesFlag(BleOptions.ScaleFeatures.FEATURES_CONFIG_WIFI)
-                .setPassword("12345678")
-                .setSsid("IT05-2.4G")
+                .setPassword("lefu123456")
+                .setSsid("IT36")
+//                .setPassword("12345678")
+//                .setSsid("Tenda_414A30")
                 .build();
     }
 
@@ -77,32 +86,49 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         @Override
         public void monitorBluetoothWorkState(PPBleWorkState ppBleWorkState, PPDeviceModel deviceModel) {
             if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnected) {
-                Logger.d("设备已连接");
+                Logger.d(getString(R.string.device_connected));
+                setLog(getString(R.string.device_connected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateConnecting) {
-                Logger.d("设备连接中");
+                Logger.d(getString(R.string.device_connecting));
+                setLog(getString(R.string.device_connecting));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateDisconnected) {
-                Logger.d("设备已断开");
+                Logger.d(getString(R.string.device_disconnected));
+                setLog(getString(R.string.device_disconnected));
             } else if (ppBleWorkState == PPBleWorkState.PPBleStateSearchCanceled) {
-                Logger.d("停止扫描");
+                Logger.d(getString(R.string.stop_scanning));
+                setLog(getString(R.string.stop_scanning));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkSearchTimeOut) {
-                Logger.d("停止扫描");
+                Logger.d(getString(R.string.scan_timeout));
+                setLog(getString(R.string.scan_timeout));
             } else if (ppBleWorkState == PPBleWorkState.PPBleWorkStateSearching) {
-                Logger.d("扫描中");
+                Logger.d(getString(R.string.scanning));
+                setLog(getString(R.string.scanning));
             } else {
-                Logger.e("蓝牙状态异常");
+                Logger.e(getString(R.string.bluetooth_status_is_abnormal));
+                setLog(getString(R.string.bluetooth_status_is_abnormal));
             }
         }
 
         @Override
         public void monitorBluetoothSwitchState(PPBleSwitchState ppBleSwitchState) {
             if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOff) {
-                Logger.e("系统蓝牙断开");
-                Toast.makeText(BleConfigWifiActivity.this, "系统蓝牙断开", Toast.LENGTH_SHORT).show();
+                Logger.e(getString(R.string.system_bluetooth_disconnect));
+                Toast.makeText(BleConfigWifiActivity.this, getString(R.string.system_bluetooth_disconnect), Toast.LENGTH_SHORT).show();
             } else if (ppBleSwitchState == PPBleSwitchState.PPBleSwitchStateOn) {
-                Logger.d("系统蓝牙打开");
-                Toast.makeText(BleConfigWifiActivity.this, "系统蓝牙打开", Toast.LENGTH_SHORT).show();
+//                delayScan();
+                Logger.d(getString(R.string.system_blutooth_on));
+                Toast.makeText(BleConfigWifiActivity.this, getString(R.string.system_blutooth_on), Toast.LENGTH_SHORT).show();
             } else {
-                Logger.e("系统蓝牙异常");
+                Logger.e(getString(R.string.system_bluetooth_abnormal));
+            }
+        }
+
+        @Override
+        public void monitorLogData(String log) {
+            if (log.contains("send")) {
+                setLog(log);
+            } else {
+                setLog2(log);
             }
         }
     };
@@ -114,4 +140,41 @@ public class BleConfigWifiActivity extends AppCompatActivity {
         ppScale.disConnect();
         ppScale.stopSearch();
     }
+
+    private void setLog(final String log) {
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            if (logCat != null) {
+                logCat.append(log + "\n");
+            }
+        } else {
+            if (logCat != null) {
+                logCat.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        logCat.append(log + "\n");
+                    }
+                });
+            }
+        }
+    }
+
+    private void setLog2(final String log) {
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            if (logCat2 != null) {
+                logCat2.append(log + "\n");
+            }
+        } else {
+            if (logCat2 != null) {
+                logCat2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        logCat2.append(log + "\n");
+                    }
+                });
+            }
+        }
+    }
+
 }
