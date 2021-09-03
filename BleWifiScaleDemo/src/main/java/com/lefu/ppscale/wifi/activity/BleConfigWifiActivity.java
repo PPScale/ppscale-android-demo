@@ -155,36 +155,34 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                 //拿到sn 处理业务逻辑
                 Logger.e("xxxxxxxxxxxx-" + sn);
                 Logger.e("xxxxxxxxxxxx-deviceName = " + deviceModel.getDeviceName() + " mac = " + deviceModel.getDeviceMac());
-                stopPPScale();
 
+                stopPPScale();
+//                tvHint.setText("sn = " + sn);
+//                tvHint.setVisibility(View.VISIBLE);
+
+
+                onConfigwIfiSuccess(sn);
                 Map<String, String> map = new HashMap<>();
                 map.put("sn", sn);
                 map.put("uid", SettingManager.get().getUid());
-
-                DataTask.post(NetUtil.SAVE_WIFI_GROUP, map, new RetCallBack<SaveWifiGroupBean>(SaveWifiGroupBean.class) {
-
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(BleConfigWifiActivity.this, R.string.config_wifi_fail, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(SaveWifiGroupBean response, int id) {
-                        if (response.isStatus()) {
-                            Toast.makeText(BleConfigWifiActivity.this, R.string.config_wifi_success, Toast.LENGTH_SHORT).show();
-                            DeviceModel device = DBManager.manager().getDevice(address);
-                            if (device != null) {
-                                device.setSn(sn);
-                                device.setSsid(ssid);
-                                DBManager.manager().updateDevice(device);
-                            }
-                            finish();
-                        } else {
-                            String content = TextUtils.isEmpty(response.getMsg()) ? getString(R.string.config_wifi_fail) : response.getMsg();
-                            Toast.makeText(BleConfigWifiActivity.this, content, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                //等服务器配置Ok可以增加网络判断
+//                DataTask.post(NetUtil.SAVE_WIFI_GROUP, map, new RetCallBack<SaveWifiGroupBean>(SaveWifiGroupBean.class) {
+//
+//                    @Override
+//                    public void onError(Call call, Exception e, int id) {
+//                        Toast.makeText(BleConfigWifiActivity.this, R.string.config_wifi_fail, Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onResponse(SaveWifiGroupBean response, int id) {
+//                        if (response.isStatus()) {
+//                            onConfigwIfiSuccess(sn);
+//                        } else {
+////                            String content = TextUtils.isEmpty(response.getMsg()) ? getString(R.string.config_wifi_fail) : response.getMsg();
+////                            Toast.makeText(BleConfigWifiActivity.this, content, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
 
 //                finish();
             }
@@ -199,6 +197,17 @@ public class BleConfigWifiActivity extends AppCompatActivity {
                 .setBleStateInterface(bleStateInterface)
                 .build();
         ppScale.startSearchBluetoothScaleWithMacAddressList();
+    }
+
+    private void onConfigwIfiSuccess(String sn) {
+        Toast.makeText(BleConfigWifiActivity.this, R.string.config_wifi_success, Toast.LENGTH_SHORT).show();
+        DeviceModel device = DBManager.manager().getDevice(address);
+        if (device != null) {
+            device.setSn(sn);
+            device.setSsid(ssid);
+            DBManager.manager().updateDevice(device);
+        }
+        finish();
     }
 
     /**
@@ -255,6 +264,11 @@ public class BleConfigWifiActivity extends AppCompatActivity {
             } else {
                 Logger.e(getString(R.string.system_bluetooth_abnormal));
             }
+        }
+
+        @Override
+        public void monitorLogData(String log) {
+
         }
     };
 
@@ -438,5 +452,6 @@ public class BleConfigWifiActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

@@ -1,6 +1,7 @@
 package com.lefu.ppscale.wifi.develop;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -155,6 +156,11 @@ public class DeveloperActivity extends AppCompatActivity {
             }
             reStartConnectView.setVisibility(View.VISIBLE);
         }
+
+        @Override
+        public void monitorLogData(String log) {
+
+        }
     };
 
     private void onBleWorkStateChange(PPBleWorkState ppBleWorkState) {
@@ -182,12 +188,14 @@ public class DeveloperActivity extends AppCompatActivity {
                     break;
                 case PPBleWorkStateConnecting:
                     Logger.d(getString(R.string.device_connecting));
-                    tvTitle.setText(getString(R.string.device_connecting));
+//                    tvTitle.setText(getString(R.string.device_connecting));
+                    setLog(getString(R.string.device_connecting), tvTitle);
                     break;
                 case PPBleWorkStateDisconnected:
                     Logger.d(getString(R.string.device_disconnected));
-                    tvTitle.setText(getString(R.string.device_disconnected));
+//                    tvTitle.setText(getString(R.string.device_disconnected));
                     reStartConnectView.setVisibility(View.VISIBLE);
+                    setLog(getString(R.string.device_disconnected), tvTitle);
                     break;
             }
         }
@@ -258,4 +266,23 @@ public class DeveloperActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
+
+    private void setLog(final String log, TextView logCat) {
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            if (logCat != null) {
+                logCat.setText(log);
+            }
+        } else {
+            if (logCat != null) {
+                logCat.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        logCat.setText(log);
+                    }
+                });
+            }
+        }
+    }
+
 }

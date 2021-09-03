@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -306,6 +307,11 @@ public class BindingDeviceActivity extends FragmentActivity {
                 Logger.e(getString(R.string.system_bluetooth_abnormal));
             }
         }
+
+        @Override
+        public void monitorLogData(String log) {
+
+        }
     };
 
     @Override
@@ -396,6 +402,8 @@ public class BindingDeviceActivity extends FragmentActivity {
         ppScale.stopSearch();
         finish();
     }
+
+
 
 }
 
