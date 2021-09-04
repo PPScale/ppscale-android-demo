@@ -63,6 +63,7 @@ public class BindingDeviceActivity extends Activity {
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
     boolean isOnResume = false;//页面可见时再重新发起扫描
+    private PPScale.Builder builder1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -216,13 +217,22 @@ public class BindingDeviceActivity extends Activity {
             for (DeviceModel deviceModel : deviceList) {
                 addressList.add(deviceModel.getDeviceMac());
             }
-            ppScale = new PPScale.Builder(this)
-                    .setProtocalFilterImpl(getProtocalFilter())
-                    .setBleOptions(getBleOptions())
-                    .setDeviceList(addressList)
-                    .setUserModel(userModel)
-                    .setBleStateInterface(bleStateInterface)
-                    .build();
+
+            if (builder1 == null) {
+                builder1 = new PPScale.Builder(this);
+            }
+            if (ppScale == null) {
+                ppScale = builder1.setProtocalFilterImpl(getProtocalFilter())
+                        .setBleOptions(getBleOptions())
+                        .setDeviceList(addressList)
+                        .setUserModel(userModel)
+                        .setBleStateInterface(bleStateInterface)
+                        .build();
+            }
+            if (builder1 != null) {
+                builder1.setUserModel(userModel);
+                ppScale.setBuilder(builder1);
+            }
             ppScale.startSearchBluetoothScaleWithMacAddressList();
         }
 
