@@ -40,6 +40,12 @@ android {
             outputFileName = "PPScale_${variant.versionName}_${variant.name}_${releaseTime()}.apk"
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -57,4 +63,5 @@ dependencies {
 //    }
 
     implementation project(":body_sl")
+
 }

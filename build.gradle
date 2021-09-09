@@ -27,11 +27,24 @@ allprojects {
         jcenter()
         mavenCentral()
 //        maven { url 'http://192.168.16.197:9090/nexus/content/repositories/public' }
-        maven { url 'http://nexus.lefuenergy.com/repository/maven-public' }
+//        maven { url 'http://nexus.lefuenergy.com/repository/maven-public' }
         maven { url 'https://jitpack.io' }
     }
+
+
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'androidx.core' &&
+                    !details.requested.name.contains('androidx')) {
+                details.useVersion "1.0.1"
+            }
+        }
+    }
 }
